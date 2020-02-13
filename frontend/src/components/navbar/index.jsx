@@ -26,7 +26,7 @@ export default class NavBar extends Component {
               <Grid item>
                 <Button
                   component={Link}
-                  to="/signIn"
+                  to="/signin"
                   variant="contained"
                   startIcon={<PersonIcon />}
                 >
