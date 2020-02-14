@@ -8,6 +8,7 @@ import Footer from "./components/footer";
 import SearchBar from "./components/searchbar";
 import SaleItem from "./components/saleitem";
 import Product from "./components/product";
+import SignUp from "./components/signup";
 
 export default function App() {
   return (
@@ -17,7 +18,9 @@ export default function App() {
 
         <Switch>
           <Route path="/signin"></Route>
-          <Route path="/signup"></Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
           <Route path="/product">
             <Product
               product={{
