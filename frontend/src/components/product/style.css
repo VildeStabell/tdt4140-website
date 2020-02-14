@@ -1,0 +1,23 @@
+.display-img {
+  width: 100%;
+}
+
+.contact-info {
+  margin: 5px;
+  padding: 32px;
+}
+
+.product-image {
+  margin: 64px;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loader-container {
+  height: 100vh;
+}
