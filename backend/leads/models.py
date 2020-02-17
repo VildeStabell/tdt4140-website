@@ -15,7 +15,8 @@ class User(models.Model):
         return self.username
 
 
-class Ad(models.Model):
-    creator_id = models.CharField(max_length=10)
-    ad_Text = models.TextField(max_length=1000)
+class Advert(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    ad_text = models.TextField(max_length=1000)
+    created_on = models.DateTimeField(auto_now_add=True)
     # add images e v e n t u a l l y
