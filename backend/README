@@ -1,0 +1,6 @@
+To run backend:
+
+1. cd backend
+2. venv\Scripts\activate (For Mac skriv: source venv\Scripts\activate ) 
+3. pip install django djangorestframework
+4. python manage.py runserver
