@@ -6,7 +6,7 @@ class User(models.Model):
     # edit to not store raw text later on
     password = models.CharField(max_length=16)
     email = models.EmailField(max_length=30)
-    phone_num = models.IntegerField()
+    phone_num = models.CharField(max_length=10)
     first_name = models.CharField(max_length=16)
     last_name = models.CharField(max_length=16)
     created_on = models.DateTimeField(auto_now_add=True)
