@@ -8,7 +8,7 @@ from .serializers import UserSerializer, AdvertSerializer
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (AllowAny, )
 
 
 class AdvertViewSet(ModelViewSet):
