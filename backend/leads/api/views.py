@@ -14,4 +14,4 @@ class UserViewSet(ModelViewSet):
 class AdvertViewSet(ModelViewSet):
     queryset = Advert.objects.all()
     serializer_class = AdvertSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (AllowAny, )
