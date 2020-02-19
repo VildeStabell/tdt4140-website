@@ -7,31 +7,69 @@ import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import SearchBar from "./components/searchbar";
 import SaleItem from "./components/saleitem";
+import Product from "./components/product";
 
 export default function App() {
   return (
     <Router>
       <div>
-        <NavBar></NavBar>
+        <NavBar />
 
         <Switch>
           <Route path="/signin"></Route>
           <Route path="/signup"></Route>
-          <Route path="/product"></Route>
+          <Route path="/product">
+            <Product
+              product={{
+                title: "Fin og behagelig 6 seters sofa til salgs.",
+                description:
+                  "Kun noen år gammel. Mener den ble kjøpt hos Skeidar for ca 5 år siden. Den er tatt godt vare på og er ren og fin. Har ikke vært i kontakt med husdyr. Selges for min mor.",
+                image:
+                  "https://www.ikea.com/no/no/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-metal__0602115_PE680184_S5.JPG?f=s",
+                price: 2000
+              }}
+              user={{
+                name: "Ola Nordmann",
+                telephone: "95491672",
+                email: "example@email.com"
+              }}
+            />
+          </Route>
           <Route path="/">
-            <Home></Home>
+            <Home
+              // {/* This is just added to test display of saleitems */}
+              products={[
+                { id: 1 },
+                { id: 2 },
+                { id: 3 },
+                { id: 4 },
+                { id: 5 },
+                { id: 6 },
+                { id: 7 },
+                { id: 8 },
+                { id: 9 },
+                { id: 10 },
+                { id: 11 }
+              ]}
+            />
           </Route>
         </Switch>
 
         <Box m={2}>
-          <Footer></Footer>
+          <Footer className="footer" />
         </Box>
       </div>
     </Router>
   );
 }
 
-function Home() {
+function Home({ products }) {
+  var productList = products.map(product => (
+    <Grid item xs={12} sm={6} md={4} lg={3}>
+      <SaleItem productID={product.id} />
+    </Grid>
+  ));
+
   return (
     <Container maxWidth="md">
       <Grid container direction="column" alignItems="center" spacing={2}>
@@ -47,25 +85,7 @@ function Home() {
           alignItems="center"
           justify="flex-start"
         >
-          {/* This is just added to test display of saleitems */}
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <SaleItem />
-          </Grid>
+          {productList}
         </Grid>
       </Grid>
     </Container>
