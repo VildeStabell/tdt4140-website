@@ -7,6 +7,7 @@ import NavBar from "./components/navbar";
 import Footer from "./components/footer";
 import SearchBar from "./components/searchbar";
 import SaleItem from "./components/saleitem";
+import SignIn from "./components/signin";
 import Product from "./components/product";
 
 export default function App() {
@@ -16,7 +17,9 @@ export default function App() {
         <NavBar />
 
         <Switch>
-          <Route path="/signin"></Route>
+          <Route path="/signin">
+            <SignIn />
+          </Route>
           <Route path="/signup"></Route>
           <Route path="/product">
             <Product
