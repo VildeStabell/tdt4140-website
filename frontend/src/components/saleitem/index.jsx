@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SaleItem({ productID }) {
+export default function SaleItem({ productID, title, price }) {
   const classes = useStyles();
 
   return (
@@ -26,10 +26,10 @@ export default function SaleItem({ productID }) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Sofa til salgs
+            {title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            499,-
+            {price}
           </Typography>
         </CardContent>
       </CardActionArea>

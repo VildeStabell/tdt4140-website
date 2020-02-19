@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
 import "./style.css";
@@ -11,50 +11,37 @@ import SignIn from "./components/signin";
 import Product from "./components/product";
 
 export default function App() {
+  const [selectedProduct, setSelectedProduct] = useState(1);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // This is just mock api, change with actual api url eventually
+    fetch("https://5e4d41479b6805001438fbca.mockapi.io/products")
+      .then(response => {
+        if (response.status > 400) {
+          console.log("Error: " + response.status + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setProducts(data);
+      });
+  });
+
   return (
     <Router>
       <div>
         <NavBar />
-
         <Switch>
           <Route path="/signin">
             <SignIn />
           </Route>
           <Route path="/signup"></Route>
           <Route path="/product">
-            <Product
-              product={{
-                title: "Fin og behagelig 6 seters sofa til salgs.",
-                description:
-                  "Kun noen år gammel. Mener den ble kjøpt hos Skeidar for ca 5 år siden. Den er tatt godt vare på og er ren og fin. Har ikke vært i kontakt med husdyr. Selges for min mor.",
-                image:
-                  "https://www.ikea.com/no/no/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-metal__0602115_PE680184_S5.JPG?f=s",
-                price: 2000
-              }}
-              user={{
-                name: "Ola Nordmann",
-                telephone: "95491672",
-                email: "example@email.com"
-              }}
-            />
+            <Product product={products[selectedProduct - 1]} />
           </Route>
           <Route path="/">
-            <Home
-              // {/* This is just added to test display of saleitems */}
-              products={[
-                { id: 1 },
-                { id: 2 },
-                { id: 3 },
-                { id: 4 },
-                { id: 5 },
-                { id: 6 },
-                { id: 7 },
-                { id: 8 },
-                { id: 9 },
-                { id: 10 },
-                { id: 11 }
-              ]}
-            />
+            <Home products={products} callback={setSelectedProduct} />
           </Route>
         </Switch>
 
@@ -66,10 +53,22 @@ export default function App() {
   );
 }
 
-function Home({ products }) {
+function Home({ products, callback }) {
   var productList = products.map(product => (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
-      <SaleItem productID={product.id} />
+    <Grid
+      item
+      xs={12}
+      sm={6}
+      md={4}
+      lg={3}
+      onClick={() => callback(product.id)}
+    >
+      <SaleItem
+        key={product.id}
+        productID={product.id}
+        title={product.title}
+        price={product.price}
+      />
     </Grid>
   ));
 
