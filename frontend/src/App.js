@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
 import "./style.css";
@@ -11,6 +11,9 @@ import SignIn from "./components/signin";
 import Product from "./components/product";
 
 export default function App() {
+  const [isLoggedIn, setLoggedIn] = useState(
+    localStorage.getItem("token") ? true : false
+  );
   return (
     <Router>
       <div>

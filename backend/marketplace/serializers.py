@@ -5,7 +5,7 @@ from rest_framework.settings import api_settings
 class GetFullUserSerializer(sz.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id','username','is_superuser','first_name', 'last_name')
+        fields = ('id','username', 'email', 'is_superuser','first_name', 'last_name')
 
 
 class UserSerializerWithToken(sz.ModelSerializer):
@@ -22,14 +22,16 @@ class UserSerializerWithToken(sz.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
+            email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name']
         )
         user.set_password(validated_data['password'])
         user.save()
+
         return user
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'password', 'first_name',
+        fields = ('token', 'username', 'email', 'password', 'first_name',
                   'last_name')

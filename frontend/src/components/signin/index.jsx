@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,7 +11,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,9 +34,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignIn() {
+  const [redirect, setRedirect] = useState(null);
   const classes = useStyles();
-
-  return (
+  return redirect ? (
+    redirect
+  ) : (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -74,7 +76,9 @@ export default function SignIn() {
             label="Husk meg"
           />
           <Button
-            type="submit"
+            onClick={() => {
+              console.log(signIn(setRedirect));
+            }}
             fullWidth
             variant="contained"
             color="primary"
@@ -93,4 +97,35 @@ export default function SignIn() {
       </div>
     </Container>
   );
+}
+
+async function signIn(setRedirect) {
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  const url = "http://localhost:8000/token-auth/";
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username: email,
+      password: password
+    })
+  })
+    .then(res => {
+      if (res.status >= 400) {
+        console.log("Error");
+      }
+      return res.json();
+    })
+    .then(res => {
+      if (res.token === undefined) {
+        console.log("Got no token");
+      } else {
+        localStorage.setItem("token", res.token);
+        setRedirect(<Redirect to={"/"} />);
+      }
+    });
 }
