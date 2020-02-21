@@ -54,10 +54,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="E-post adresse"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Brukernavn"
+            name="username"
+            autoComplete="off"
             autoFocus
           />
           <TextField
@@ -69,7 +69,7 @@ export default function SignIn() {
             label="Passord"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="off"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -100,7 +100,7 @@ export default function SignIn() {
 }
 
 async function signIn(setRedirect) {
-  var email = document.getElementById("email").value;
+  var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
   const url = "http://localhost:8000/token-auth/";
 
@@ -110,7 +110,7 @@ async function signIn(setRedirect) {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      username: email,
+      username: username,
       password: password
     })
   })

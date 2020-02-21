@@ -1,0 +1,26 @@
+.loadingWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading {
+  animation: load-animation linear 1s;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border-top: 4px #3f51b5 solid;
+  border-right: 4px solid transparent;
+  animation-iteration-count: infinite;
+}
+
+@keyframes load-animation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

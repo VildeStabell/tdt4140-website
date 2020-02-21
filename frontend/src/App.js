@@ -9,6 +9,8 @@ import SearchBar from "./components/searchbar";
 import SaleItem from "./components/saleitem";
 import SignIn from "./components/signin";
 import Product from "./components/product";
+import SignUp from "./components/signup";
+import Loading from "./components/loading";
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
@@ -34,12 +36,14 @@ export default function App() {
   return (
     <Router>
       <div>
-        <NavBar />
+        <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         <Switch>
           <Route path="/signin">
             <SignIn />
           </Route>
-          <Route path="/signup"></Route>
+          <Route path="/signup">
+            <SignUp />
+          </Route>
           <Route path="/product">
             <Product product={products[selectedProduct - 1]} />
           </Route>
@@ -75,7 +79,7 @@ function Home({ products, callback }) {
     </Grid>
   ));
 
-  return (
+  return productList.length >= 1 ? (
     <Container maxWidth="md">
       <Grid container direction="column" alignItems="center" spacing={2}>
         <Grid item className="search">
@@ -94,5 +98,7 @@ function Home({ products, callback }) {
         </Grid>
       </Grid>
     </Container>
+  ) : (
+    <Loading />
   );
 }
