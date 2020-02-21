@@ -10,8 +10,10 @@ import {
 } from "@material-ui/core";
 import "./style.css";
 import MessageIcon from "@material-ui/icons/Message";
+import PersonIcon from "@material-ui/icons/Person";
+import { Link } from "react-router-dom";
 
-export default function Product({ product }) {
+export default function Product({ product, isLoggedIn }) {
   const { image, user } = product || {};
   const productLoaded = true;
   return productLoaded ? (
@@ -29,7 +31,7 @@ export default function Product({ product }) {
             {null}
           </Grid>
           <Grid item xs={12} md={4}>
-            <ContactInfo user={user}></ContactInfo>
+            <CheckLogInStatus user={user} isLoggedIn={isLoggedIn} />
           </Grid>
           <Grid item sm={12} md={7}>
             <ProductInfo product={product} />
@@ -44,6 +46,10 @@ export default function Product({ product }) {
       </div>
     </div>
   );
+}
+
+function CheckLogInStatus({ user, isLoggedIn }) {
+  return isLoggedIn ? <ContactInfo user={user} /> : <NotLoggedIn />;
 }
 
 function ContactInfo({ user }) {
@@ -63,6 +69,28 @@ function ContactInfo({ user }) {
       >
         Send melding
       </Button>
+    </Paper>
+  );
+}
+
+function NotLoggedIn() {
+  return (
+    <Paper className="contact-info" elevation={10}>
+      <Grid container direction="column" justify="center">
+        <Typography variant="h6" align="center">
+          Du må logge inn for å se kontaktinformasjon
+        </Typography>
+        <Button
+          component={(Box, Link)}
+          to={"/signin"}
+          mt={2}
+          variant="contained"
+          color="primary"
+          startIcon={<PersonIcon />}
+        >
+          Logg inn
+        </Button>
+      </Grid>
     </Paper>
   );
 }

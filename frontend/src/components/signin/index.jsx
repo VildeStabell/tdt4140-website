@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn() {
+export default function SignIn({ setLoggedIn }) {
   const [redirect, setRedirect] = useState(null);
   const classes = useStyles();
   return redirect ? (
@@ -77,7 +77,7 @@ export default function SignIn() {
           />
           <Button
             onClick={() => {
-              console.log(signIn(setRedirect));
+              signIn(setRedirect, setLoggedIn);
             }}
             fullWidth
             variant="contained"
@@ -99,7 +99,7 @@ export default function SignIn() {
   );
 }
 
-async function signIn(setRedirect) {
+async function signIn(setRedirect, setLoggedIn) {
   var email = document.getElementById("email").value;
   var password = document.getElementById("password").value;
   const url = "http://localhost:8000/token-auth/";
@@ -125,6 +125,7 @@ async function signIn(setRedirect) {
         console.log("Got no token");
       } else {
         localStorage.setItem("token", res.token);
+        setLoggedIn(true);
         setRedirect(<Redirect to={"/"} />);
       }
     });
