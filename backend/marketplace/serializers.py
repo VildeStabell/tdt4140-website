@@ -1,6 +1,8 @@
 from rest_framework import serializers as sz
 from django.contrib.auth.models import User
 from rest_framework.settings import api_settings
+from .models import SaleItem
+
 
 class GetFullUserSerializer(sz.ModelSerializer):
     class Meta:
@@ -33,5 +35,12 @@ class UserSerializerWithToken(sz.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('token', 'username', 'email', 'password', 'first_name',
+        fields = ('token', 'username', 'password', 'first_name',
                   'last_name')
+
+
+class SaleItemSerializer(sz.ModelSerializer):
+    class Meta:
+        model = SaleItem
+        fields = ('id', 'title', 'creator',
+                  'description', 'creation_date', 'img')
