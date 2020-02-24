@@ -15,8 +15,12 @@ import Loading from "./components/loading";
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
+  const [isLoggedIn, setLoggedIn] = useState(
+    localStorage.getItem("token") ? true : false
+  );
 
   useEffect(() => {
+    console.log("User is logged in: " + isLoggedIn);
     // This is just mock api, change with actual api url eventually
     fetch("https://5e4d41479b6805001438fbca.mockapi.io/products")
       .then(response => {
@@ -28,24 +32,24 @@ export default function App() {
       .then(data => {
         setProducts(data);
       });
-  });
+  }, []);
 
-  const [isLoggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
-  );
   return (
     <Router>
       <div>
         <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         <Switch>
           <Route path="/signin">
-            <SignIn />
+            <SignIn setLoggedIn={setLoggedIn} />
           </Route>
           <Route path="/signup">
             <SignUp />
           </Route>
           <Route path="/product">
-            <Product product={products[selectedProduct - 1]} />
+            <Product
+              product={products[selectedProduct - 1]}
+              isLoggedIn={isLoggedIn}
+            />
           </Route>
           <Route path="/">
             <Home products={products} callback={setSelectedProduct} />
