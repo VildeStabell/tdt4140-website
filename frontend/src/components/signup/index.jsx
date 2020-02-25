@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouterLink, Redirect } from "react-router-dom";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,98 +37,113 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const [redirect, setRedirect] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
 
   return redirect ? (
     redirect
   ) : (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Registrer deg
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                name="username"
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="Brukernavn"
-                autoFocus
-              />
+    <div>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Registrer deg
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="off"
+                  name="username"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Brukernavn"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="off"
+                  autocomplete="off"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="telephone"
+                  label="Telefon"
+                  name="telephone"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="off"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="E-post"
+                  name="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Passord"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="Jeg godtar betingelsene."
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="off"
-                autocomplete="off"
-                variant="outlined"
-                required
-                fullWidth
-                id="telephone"
-                label="Telefon"
-                name="telephone"
-              />
+            <Button
+              onClick={() => signUp(setRedirect, setOpenModal)}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Registrer
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link component={RouterLink} to={"/signin"} variant="body2">
+                  Har du allerede en bruker? Logg inn
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="E-post"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Passord"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Jeg godtar betingelsene."
-              />
-            </Grid>
-          </Grid>
-          <Button
-            onClick={() => signUp(setRedirect)}
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Registrer
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link component={RouterLink} to={"/signin"} variant="body2">
-                Har du allerede en bruker? Logg inn
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
+      <Snackbar
+        open={openModal}
+        autoHideDuration={4000}
+        onClose={() => setOpenModal(false)}
+      >
+        <Alert onClose={() => setOpenModal(false)} severity="error">
+          Registrering mislyktes! Prøv igjen
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }
 
-function signUp(setRedirect) {
+function signUp(setRedirect, setOpenModal) {
   var username = document.getElementById("username").value;
   var telephone = document.getElementById("telephone").value;
   var email = document.getElementById("email").value;
@@ -158,6 +175,7 @@ function signUp(setRedirect) {
       if (res.response === "error") {
         for (let message in res.message) {
           console.log(message + " is invalid: " + res.message[message]);
+          setOpenModal(true);
         }
       } else if (res.response === "success") {
         console.log("Successfully created user");
