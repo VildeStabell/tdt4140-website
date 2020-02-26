@@ -1,28 +1,29 @@
-from django.shortcuts import render
-
-from .serializers import *
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
-from rest_framework import permissions
-
+from rest_framework import status
+from .permissions import IsOwnerProfileOrReadOnly
+from .models import User
+# from .serializers import UserSerializer
+from djoser.serializers import UserSerializer
 
 
 @api_view(['GET'])
-def get_current_user(request):
-    serializer = GetFullUserSerializer(request.user)
-    return Response(serializer.data)
+@permission_classes([IsAuthenticated])
+def restricted(request, *args, **kwargs):
+    return Response(data="Only for logged in User", status=status.HTTP_200_OK)
 
 
-class CreateUserView(APIView):
-    permission_classes = (permissions.AllowAny, )
-    def post(self,request):
-        user = request.data.get('user')
-        if not user:
-            return Response({'response' : 'error', 'message' : 'No data found'})
-        serializer = UserSerializerWithToken(data = user)
-        if serializer.is_valid():
-            saved_user = serializer.save()
-        else:
-            return Response({"response" : "error", "message" : serializer.errors})
-        return Response({"response" : "success", "message" : "user created succesfully"})
+class UserProfileListCreateView(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]

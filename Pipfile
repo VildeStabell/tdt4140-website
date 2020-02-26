@@ -10,6 +10,9 @@ django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 djangorestframework-jwt = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.8"
