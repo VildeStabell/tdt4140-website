@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link as RouterLink, Redirect } from "react-router-dom";
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,71 +37,83 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignIn({ setLoggedIn }) {
   const [redirect, setRedirect] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
   return redirect ? (
     redirect
   ) : (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Logg inn
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Brukernavn"
-            name="username"
-            autoComplete="off"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Passord"
-            type="password"
-            id="password"
-            autoComplete="off"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Husk meg"
-          />
-          <Button
-            onClick={() => {
-              signIn(setRedirect, setLoggedIn);
-            }}
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Logg Inn
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link component={RouterLink} to={"/signup"} variant="body2">
-                {"Har du ikke en konto? Registrer deg her"}
-              </Link>
+    <div>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Logg inn
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Brukernavn"
+              name="username"
+              autoComplete="off"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Passord"
+              type="password"
+              id="password"
+              autoComplete="off"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Husk meg"
+            />
+            <Button
+              onClick={() => {
+                signIn(setRedirect, setLoggedIn, setOpenModal);
+              }}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Logg Inn
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link component={RouterLink} to={"/signup"} variant="body2">
+                  {"Har du ikke en konto? Registrer deg her"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
+      <Snackbar
+        open={openModal}
+        autoHideDuration={4000}
+        onClose={() => setOpenModal(false)}
+      >
+        <Alert onClose={() => setOpenModal(false)} severity="error">
+          Feil brukernavn eller passord!
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }
 
-async function signIn(setRedirect, setLoggedIn) {
+async function signIn(setRedirect, setLoggedIn, setOpenModal) {
   var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
   const url = "http://localhost:8000/token-auth/";
@@ -123,6 +137,7 @@ async function signIn(setRedirect, setLoggedIn) {
     .then(res => {
       if (res.token === undefined) {
         console.log("Got no token");
+        setOpenModal(true);
       } else {
         localStorage.setItem("token", res.token);
         setLoggedIn(true);
