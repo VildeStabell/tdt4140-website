@@ -12,3 +12,7 @@ urlpatterns = [
     path("all-profiles", UserProfileListCreateView.as_view(), name="all-profiles"),
     path("profile/<int:pk>", UserProfileDetailView.as_view(), name="profile"),
 ]
+
+router = DefaultRouter()
+router.register('saleItems', SaleItemView)
+urlpatterns += router.urls
