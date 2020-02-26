@@ -1,7 +1,18 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
+from rest_framework.routers import DefaultRouter
+
 
 urlpatterns = [
-    path('current_user/', get_current_user),
-    path('users/create', CreateUserView.as_view()),
+
+    # path('', include('djoser.urls')),
+    # path('', include('djoser.urls.authtoken')),
+    path('restricted/', restricted),
+
+    path("all-profiles", UserProfileListCreateView.as_view(), name="all-profiles"),
+    path("profile/<int:pk>", UserProfileDetailView.as_view(), name="profile"),
 ]
+
+router = DefaultRouter()
+router.register('saleItems', SaleItemView)
+urlpatterns += router.urls

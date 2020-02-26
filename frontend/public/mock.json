@@ -1,0 +1,132 @@
+[
+  {
+    "id": "1",
+    "title": "Fin sofa selges rimelig",
+    "description": "Fin sofa fra IKEA. Lengde: 230 cm Dybde: 90 cm Høyde: 45 cm Sofaen er pent brukt. Må hentes på Nordstrand, Oslo.",
+    "price": "500",
+    "creation_date": "2020-02-21",
+    "img": "https://images.finncdn.no/dynamic/960w/2020/1/vertical-0/20/0/168/267/160_316422172.jpg",
+    "user": {
+      "name": "Ola Nordmann",
+      "telephone": "95122965",
+      "email": "eksempelepost@epost.no"
+    }
+  },
+  {
+    "id": "2",
+    "title": "Stuebord av drivved",
+    "description": "Stuebord av gamle låvematerialer. Bordet er rustikt og stemningsskapende. Bordet er satt inn med voks slik at det er lett og holde rent og rammen er av metall.",
+    "price": "5 900",
+    "creation_date": "2020-02-15",
+    "img": "https://images.finncdn.no/dynamic/960w/2019/4/vertical-5/29/9/146/197/109_732220063.jpg",
+    "user": {
+      "name": "Kari Trulsen",
+      "telephone": "95562965",
+      "email": "karit@gmail.com"
+    }
+  },
+  {
+    "id": "3",
+    "title": "Servise med ulike motiv",
+    "description": "6 tallerkener 1 dyp bolle En mellomstor serveringsfat En stor serveringsfat (denne har en liten hakk)",
+    "price": "500",
+    "creation_date": "2020-02-10",
+    "img": "https://images.finncdn.no/dynamic/960w/2019/12/vertical-0/26/1/166/222/551_340174668.jpg",
+    "user": {
+      "name": "Per Hansen",
+      "telephone": "95122965",
+      "email": "eksempel@gmail.no"
+    }
+  },
+  {
+    "id": "4",
+    "title": "Fint spisebord i eik!",
+    "description": "Her er bordet vist i 130cm diamter. Pris kr. 22.500,- + evt. tilleggsplater kr. 4000,- per stk. Bordet lages på mål, i ønskede materialer og finish. Bordet kan ha opptil 5 tilleggsplater À 50cm. Be oss gjerne om tilbud!",
+    "price": "22 500",
+    "creation_date": "2020-02-12",
+    "img": "https://images.finncdn.no/dynamic/960w/2014/11/vertical-5/17/3/535/162/73_1641008664.jpg",
+    "user": {
+      "name": "Jostein Tysse",
+      "telephone": "42069123",
+      "email": "josteint@jostein.no"
+    }
+  },
+  {
+    "id": "5",
+    "title": "Skrivebord for hjørne",
+    "description": "Lite praktisk skrivebord for ett lite hjørne. B: 145 D: 81 H: 76 cm. ( smal plate 48 cm dyp) Hvit / eik struktur.",
+    "price": "1 995",
+    "creation_date": "2020-02-09",
+    "img": "https://images.finncdn.no/dynamic/960w/2014/11/vertical-5/11/3/437/049/93_394918880.jpg",
+    "user": {
+      "name": "Ola Larsen",
+      "telephone": "95122965",
+      "email": "ola1234@epost.no"
+    }
+  },
+  {
+    "id": "6",
+    "title": "Antikk vitrineskap",
+    "description": "Nydelig dansk antikk vitrineskap med glassdører og tre hyller. Skapet er fra ca 1910 og har sin oprindelige farge utvendig. Er malt svart innvendig. Medfølger også nøkkel. Skaper er solid og stødig.",
+    "price": "1 500",
+    "creation_date": "2020-02-18",
+    "img": "https://images.finncdn.no/dynamic/960w/2020/2/vertical-0/26/3/171/504/443_1528515887.jpg",
+    "user": {
+      "name": "Hans Evensen",
+      "telephone": "19122924",
+      "email": "hanseven@yahoo.no"
+    }
+  },
+  {
+    "id": "7",
+    "title": "Broderte stoler selges",
+    "description": "To like Rokokko-lignende elegante stoler i utskåret, brunt treverk med broderte trekk i sete og rygg. Flerfarget broderi på grå bunn.",
+    "price": "500",
+    "creation_date": "2020-02-22",
+    "img": "https://images.finncdn.no/dynamic/960w/2019/5/vertical-5/27/1/148/564/941_2097021487.jpg",
+    "user": {
+      "name": "Justin Case",
+      "telephone": "69122965",
+      "email": "justincase@sellyo.no"
+    }
+  },
+  {
+    "id": "8",
+    "title": "Vakkert speil til salgs",
+    "description": "Sjelden mulighet! Vakkert speil fra Flamant i nydelig lysegrå farge. Har en patina som skal uttrykke at det ser gammelt ut. ",
+    "price": "3 000",
+    "creation_date": "2020-02-05",
+    "img": "https://images.finncdn.no/dynamic/960w/2020/2/vertical-0/26/9/171/504/049_1255826731.jpg",
+    "user": {
+      "name": "Sven Svenske",
+      "telephone": "95122965",
+      "email": "eksempelepost@epost.no"
+    }
+  },
+  {
+    "id": "9",
+    "title": "Antikk vedovn",
+    "description": "Pent brukt vedovn i støpejern fra 1914, merke , Ulefoss. Høyde 105 cm. Diameter 86 cm. Passer fint på hytte.",
+    "price": "950",
+    "creation_date": "2020-02-11",
+    "img": "https://images.finncdn.no/dynamic/960w/2019/4/vertical-5/11/6/144/799/866_1571821630.jpg",
+    "user": {
+      "name": "Sofie Hansen",
+      "telephone": "95122965",
+      "email": "eksempelepost@epost.no"
+    }
+  },
+  {
+    "id": "10",
+    "title": "Taklampe",
+    "description": "To veldig stylig tak kamera. Et par år gamle men veldig fin. Bruker vanlig lyspærer.",
+    "price": "250",
+    "creation_date": "2020-02-24",
+    "img": "https://images.finncdn.no/dynamic/960w/2020/2/vertical-0/26/3/171/503/633_815200476.jpg",
+    "user": {
+      "name": "Vegard Jensen",
+      "telephone": "95122965",
+      "email": "vegaa@epost.no"
+    }
+  }
+]

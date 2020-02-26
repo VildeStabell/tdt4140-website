@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SaleItem({ productID, title, price }) {
+export default function SaleItem({ productID, title, price, image }) {
   const classes = useStyles();
 
   return (
@@ -21,15 +21,15 @@ export default function SaleItem({ productID, title, price }) {
       <CardActionArea component={Link} to={`/product/${productID}`}>
         <CardMedia
           className={classes.media}
-          image="https://www.ikea.com/no/no/images/products/landskrona-3-seat-sofa-gunnared-dark-grey-metal__0602115_PE680184_S5.JPG?f=s"
+          image={image}
           title="Sofa til salgs"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {price}
+          <Typography variant="body2" color="primary" component="p">
+            {price},-
           </Typography>
         </CardContent>
       </CardActionArea>

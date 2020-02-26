@@ -15,6 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Media directory
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -25,7 +28,7 @@ SECRET_KEY = 'vx@lb3k3_(y+_e2c6&2((g6h*!%k=v91z&qz*(khot$87_8tv('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
-    'marketplace'
+    'marketplace',
+    'djoser',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -117,15 +123,32 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+# Rest framework config
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAdminUser'
     ),
+
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        # Gives admin user acces to all API
+        #  'rest_framework.authentication.BasicAuthentication',
+
     ),
+}
+
+AUTH_USER_MODEL = 'marketplace.User'
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SERIALIZERS': {
+
+    },
 }
 
 CORS_ORIGIN_WHITELIST = (
@@ -134,12 +157,12 @@ CORS_ORIGIN_WHITELIST = (
 
 CORS_ALLOW_CREDENTIALS = True
 
-JWT_AUTH = {
-    'JWT_RESPONSE_PAYLOAD_HANDLER' :   'marketplace.utils.custom_jwt_response_handler'
-}
+# JWT_AUTH = {
+#     'JWT_RESPONSE_PAYLOAD_HANDLER' :   'marketplace.utils.custom_jwt_response_handler'
+# }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'home'
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'home'

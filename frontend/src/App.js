@@ -19,16 +19,26 @@ export default function App() {
     localStorage.getItem("token") ? true : false
   );
 
+  // const url = "http://www.mocky.io/v2/5e563dea300000610028e42b";
+
+  // useEffect(() => {
+  //   console.log("User is logged in: " + isLoggedIn);
+  //   fetch(url)
+  //     .then(response => {
+  //       if (response.status > 400) {
+  //         console.log("Error: " + response.status + response.statusText);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       setProducts(data);
+  //     });
+  // }, []);
+
   useEffect(() => {
     console.log("User is logged in: " + isLoggedIn);
-    // This is just mock api, change with actual api url eventually
-    fetch("https://5e4d41479b6805001438fbca.mockapi.io/products")
-      .then(response => {
-        if (response.status > 400) {
-          console.log("Error: " + response.status + response.statusText);
-        }
-        return response.json();
-      })
+    fetch("/mock.json")
+      .then(res => res.json())
       .then(data => {
         setProducts(data);
       });
@@ -79,6 +89,7 @@ function Home({ products, callback }) {
         productID={product.id}
         title={product.title}
         price={product.price}
+        image={product.img}
       />
     </Grid>
   ));
@@ -95,7 +106,7 @@ function Home({ products, callback }) {
           item
           container
           spacing={4}
-          alignItems="center"
+          alignItems="flex-start"
           justify="flex-start"
         >
           {productList}

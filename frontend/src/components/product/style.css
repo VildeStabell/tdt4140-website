@@ -1,4 +1,6 @@
 .display-img {
+  margin-top: 16px;
+  border-radius: 2px;
   width: 100%;
 }
 
