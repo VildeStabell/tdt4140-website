@@ -49,7 +49,8 @@ Dersom alt gikk som det skal, får du
     "first_name": "F_navn",
     "last_name": "E_navn",
     "email": "din@mail.no",
-    "id": 1
+    "id": 1,
+    "is_staff":  false
 }
 ````
 Og en http melding `201 Created`
@@ -104,13 +105,14 @@ Og en http melding `201 Created`
     "first_name": "Jostein",
     "last_name": "Tysse",
     "id": 1,
-    "email": "jostein@mail.no"
+    "email": "jostein@mail.no",
+    "is_staff": true
 }
 ```
 - For å endre på info (kan ikke endre e-mail), velg PUT-request, og skriv inn endringene du vil gjøre på samme måte som når man lager en bruker. Alle felt trenger ikke deklareres, kun username.
 
-#### Endre en annen bruker:
-
+#### Endre en annen bruker\*:
+-  \*krever admin (is_staff) tilgang 
 - Velg url http://localhost:8000/api/marketplace/profile/x  , der x = id nummer på user.
 - Følg samme fremgangsmåte som i seksjonen over.
 

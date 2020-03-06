@@ -147,6 +147,8 @@ DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
+        'user': 'marketplace.serializers.UserSerializer',
+        'current_user': 'marketplace.serializers.UserSerializer'
 
     },
 }
