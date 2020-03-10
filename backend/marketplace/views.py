@@ -1,18 +1,18 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView)
 from rest_framework.response import Response
 from rest_framework import permissions
-from .serializers import SaleItemSerializer
+from .serializers import SaleItemSerializer, UserSerializer
 from .models import SaleItem
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
-from .permissions import IsOwnerProfileOrReadOnly
+from .permissions import IsOwnerProfileOrAdminOrReadOnly, IsOwnerProfileOrAdminOrReadOnlyForSaleItem
 from .models import User
 # from .serializers import UserSerializer
-from djoser.serializers import UserSerializer
+# from djoser.serializers import UserSerializer
 
 
 @api_view(['GET'])
@@ -28,7 +28,7 @@ class UserProfileListCreateView(ListCreateAPIView):
 
 
 class SaleItemView(ModelViewSet):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = [IsOwnerProfileOrAdminOrReadOnlyForSaleItem]
     serializer_class = SaleItemSerializer
     queryset = SaleItem.objects.all()
 
@@ -36,4 +36,4 @@ class SaleItemView(ModelViewSet):
 class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsOwnerProfileOrAdminOrReadOnly]
