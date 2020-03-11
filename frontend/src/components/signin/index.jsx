@@ -142,7 +142,9 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal) {
     .then(res => {
       if (!error) {
         console.log("Successfully logged in!");
-        localStorage.setItem("token", res.token);
+        console.log(res);
+        localStorage.setItem("refresh", res.refresh);
+        localStorage.setItem("access", res.access);
         setLoggedIn(true);
         setRedirect(<Redirect to={"/"} />);
       } else {

@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import ImageIcon from "@material-ui/icons/Image";
 
-export default function EditAdvert() {
+export default function EditAdvert({ accessToken }) {
   return (
     <Container maxWidth="sm" className="edit-advert">
       <Grid container direction="column" spacing={2}>
@@ -71,7 +71,9 @@ export default function EditAdvert() {
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => UpdateAdvert()}
+            onClick={() => {
+              UpdateAdvert(accessToken);
+            }}
           >
             Lagre annonse
           </Button>
@@ -81,52 +83,14 @@ export default function EditAdvert() {
   );
 }
 
-// function UpdateAdvert(setRedirect, setLoggedIn, setOpenModal) {
-//   const title = document.getElementById("title").value;
-//   const price = document.getElementById("price").value;
-//   const description = document.getElementById("description").value;
-//   const url = "localhost:8000/api/marketplace/saleItems/";
-//   var error = false;
-
-//   fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify({
-//       title: title,
-//       creator: 1,
-//       price: price,
-//       description: description,
-//       img: null
-//     })
-//   })
-//     .then(res => {
-//       if (res.status >= 400) {
-//         console.log("Error");
-//         error = true;
-//       }
-//       return res.json();
-//     })
-//     .then(res => {
-//       if (!error) {
-//         console.log("Success!");
-//         console.log(res);
-//       } else {
-//         console.log(res);
-//       }
-//     });
-// }
-
-function UpdateAdvert() {
+function UpdateAdvert(accessToken) {
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
   const image = document.querySelector('input[type="file"]');
   const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
   var error = false;
-  let token = localStorage.getItem("token");
-  console.log("Token: " + token);
+  console.log("Token: " + accessToken);
 
   let form_data = new FormData();
   form_data.append("image", image.files[0]);
@@ -137,8 +101,9 @@ function UpdateAdvert() {
   fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer" + " " + token
+      "Content-Type":
+        "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
+      Authorization: "Bearer" + " " + accessToken
     },
     body: form_data
   })

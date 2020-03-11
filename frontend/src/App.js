@@ -16,8 +16,11 @@ import EditAdvert from "./components/editadvert";
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access")
+  );
   const [isLoggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
+    localStorage.getItem("refresh") ? true : false
   );
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function App() {
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert />
+            <EditAdvert accessToken={accessToken} />
           </Route>
           <Route path="/">
             <Home products={products} callback={setSelectedProduct} />
