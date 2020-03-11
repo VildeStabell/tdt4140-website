@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
 import "./style.css";
@@ -25,11 +26,8 @@ export default function App() {
   );
 
   useEffect(() => {
-    fetch("/mock.json")
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data);
-      });
+    const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+    axios.get(url).then(res => setProducts(res.data));
   }, []);
 
   return (
