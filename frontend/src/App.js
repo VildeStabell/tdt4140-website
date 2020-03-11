@@ -38,7 +38,7 @@ export default function App() {
         <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         <Switch>
           <Route path="/signin">
-            <SignIn setLoggedIn={setLoggedIn} />
+            <SignIn setLoggedIn={setLoggedIn} setAccesstoken={setAccessToken} />
           </Route>
           <Route path="/signup">
             <SignUp />

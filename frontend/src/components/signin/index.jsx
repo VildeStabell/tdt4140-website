@@ -35,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn }) {
+export default function SignIn({ setLoggedIn, setAccesstoken }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -83,7 +83,7 @@ export default function SignIn({ setLoggedIn }) {
               type="submit"
               onClick={e => {
                 e.preventDefault();
-                signIn(setRedirect, setLoggedIn, setOpenModal);
+                signIn(setRedirect, setLoggedIn, setOpenModal, setAccesstoken);
               }}
               fullWidth
               variant="contained"
@@ -115,7 +115,7 @@ export default function SignIn({ setLoggedIn }) {
   );
 }
 
-async function signIn(setRedirect, setLoggedIn, setOpenModal) {
+async function signIn(setRedirect, setLoggedIn, setOpenModal, setAccesstoken) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const url = "http://localhost:8000/auth/jwt/create";
@@ -145,6 +145,7 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal) {
         console.log(res);
         localStorage.setItem("refresh", res.refresh);
         localStorage.setItem("access", res.access);
+        setAccesstoken(res.access);
         setLoggedIn(true);
         setRedirect(<Redirect to={"/"} />);
       } else {
