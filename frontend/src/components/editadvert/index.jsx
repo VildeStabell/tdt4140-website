@@ -17,11 +17,19 @@ export default function EditAdvert() {
           <Typography variant="h3">Rediger annonse</Typography>
         </Grid>
         <Grid item>
-          <TextField fullWidth variant="outlined" label="Tittel"></TextField>
+          <TextField
+            autoComplete="off"
+            id="title"
+            fullWidth
+            variant="outlined"
+            label="Tittel"
+          ></TextField>
         </Grid>
         <Grid item>
           <TextField
             fullWidth
+            autoComplete="off"
+            id="price"
             variant="outlined"
             label="Pris i NOK"
           ></TextField>
@@ -30,6 +38,8 @@ export default function EditAdvert() {
           <TextField
             fullWidth
             multiline
+            autoComplete="off"
+            id="description"
             rows="8"
             rowsMax="16"
             variant="outlined"
@@ -56,11 +66,95 @@ export default function EditAdvert() {
           </label>
         </Grid>
         <Grid item>
-          <Button fullWidth variant="contained" color="primary" size="large">
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => UpdateAdvert()}
+          >
             Lagre annonse
           </Button>
         </Grid>
       </Grid>
     </Container>
   );
+}
+
+// function UpdateAdvert(setRedirect, setLoggedIn, setOpenModal) {
+//   const title = document.getElementById("title").value;
+//   const price = document.getElementById("price").value;
+//   const description = document.getElementById("description").value;
+//   const url = "localhost:8000/api/marketplace/saleItems/";
+//   var error = false;
+
+//   fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify({
+//       title: title,
+//       creator: 1,
+//       price: price,
+//       description: description,
+//       img: null
+//     })
+//   })
+//     .then(res => {
+//       if (res.status >= 400) {
+//         console.log("Error");
+//         error = true;
+//       }
+//       return res.json();
+//     })
+//     .then(res => {
+//       if (!error) {
+//         console.log("Success!");
+//         console.log(res);
+//       } else {
+//         console.log(res);
+//       }
+//     });
+// }
+
+function UpdateAdvert() {
+  const title = document.getElementById("title").value;
+  const price = document.getElementById("price").value;
+  const description = document.getElementById("description").value;
+  const image = document.querySelector('input[type="file"]');
+  const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+  var error = false;
+  let token = localStorage.getItem("token");
+  console.log("Token: " + token);
+
+  let form_data = new FormData();
+  form_data.append("image", image.files[0]);
+  form_data.append("title", title);
+  form_data.append("price", price);
+  form_data.append("description", description);
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: "Bearer" + " " + token
+    },
+    body: form_data
+  })
+    .then(res => {
+      if (res.status >= 400) {
+        console.log("Error");
+        error = true;
+      }
+      return res.json();
+    })
+    .then(res => {
+      if (!error) {
+        console.log("Success!");
+        console.log(res);
+      } else {
+        console.log(res);
+      }
+    });
 }
