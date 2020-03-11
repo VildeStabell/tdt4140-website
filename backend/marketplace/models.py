@@ -5,7 +5,8 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     email = models.EmailField(verbose_name='email', max_length=255, unique=True)
     phone = models.CharField(null=True, max_length=255)
-    REQUIRED_FIELDS = ['username', 'phone', 'first_name', 'last_name']
+    is_blocked = models.BooleanField(default=False)
+    REQUIRED_FIELDS = ['username', 'phone', 'first_name', 'last_name', 'is_blocked']
     USERNAME_FIELD = 'email'
 
     def get_username(self):
@@ -22,3 +23,4 @@ class SaleItem(models.Model):
 
     def __str__(self):
         return self.title
+

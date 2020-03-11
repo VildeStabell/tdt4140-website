@@ -50,7 +50,7 @@ Dersom alt gikk som det skal, får du
     "last_name": "E_navn",
     "email": "din@mail.no",
     "id": 1,
-    "is_staff":  false
+    "is_blocked": false
 }
 ````
 Og en http melding `201 Created`
@@ -106,21 +106,59 @@ Og en http melding `201 Created`
     "last_name": "Tysse",
     "id": 1,
     "email": "jostein@mail.no",
-    "is_staff": true
+    "is_staff": true,
+    "is_blocked": false
 }
 ```
-- For å endre på info (kan ikke endre e-mail), velg PUT-request, og skriv inn endringene du vil gjøre på samme måte som når man lager en bruker. Alle felt trenger ikke deklareres, kun username.
+- For å endre på info, velg PUT-request, og skriv inn endringene du vil gjøre på samme måte som når man lager en bruker. Alle felt trenger ikke deklareres, kun username og email.
 
 #### Endre en annen bruker\*:
 -  \*krever admin (is_staff) tilgang 
-- Velg url http://localhost:8000/api/marketplace/profile/x  , der x = id nummer på user.
+- Velg url http://localhost:8000/api/marketplace/profile/x/  , der x = id-nummer på user.
 - Følg samme fremgangsmåte som i seksjonen over.
 
-#### Få tak i en liste av alle brukere:
-- Velg url http://localhost:8000/api/marketplace/all-profiles
+#### Få tak i en liste av alle brukere (som admin\*):
+- Velg url http://localhost:8000/auth/users/
 - Send en GET request 
+- \*Om du ikke er admin får du bare info om din egen bruker.
 
+### Admin actions:
+- Vi har en egen url for å redigere brukere som admin: http://localhost:8000/api/marketplace/admin/
+#### Blokkere bruker:
+- For å blokkere en bruker sender du en PUT reguest til http://localhost:8000/api/marketplace/admin/x/ der x er id til brukeren du vil blokkere
+- Skriv inn dette og send requesten
+```json
+{
+    "username" : "*brukernavn*",
+    "is_blocked" : "true"
+}
+```
+- Vet ikke hvorfor, men username må være med.
 
+#### Gjøre bruker til admin:
+- Send følgende PUT request til http://localhost:8000/api/marketplace/admin/x/ der x er id til brukeren du vil gjøre til admin
+
+```json
+{
+  "username" : "*brukernavn*",
+  "is_admin" : "true"
+}
+```
+- Du kan også endre på alle de andre feltene til brukeren når du har admin-tilgang (ikke ID). Her er alle feltene en bruker har:
+```json
+{
+    "username": "brukernavn",
+    "phone": "12345567",
+    "first_name": "F_navn",
+    "last_name": "E_navn",
+    "email": "example@mail.no",
+    "id": 2,
+    "is_staff": false,
+    "is_blocked": false,
+    "password": "passord",
+    "re_password": "passord en gang til"
+}
+```
 ## I nettleseren:
 
 - Det meste er selvforklarende når man har kommet inn på sidene.
@@ -131,8 +169,7 @@ Og en http melding `201 Created`
 - http://localhost:8000/auth/users/me/ - Se info om innlogget bruker, og endre på brukernavn/phone/navn
 - http://localhost:8000/auth/jwt/create - Lage tokens, "logg inn" med email + passord
 - http://127.0.0.1:8000/auth/jwt/refresh - Refreshe access-token, lim inn en gyldig refresh token
-- http://localhost:8000/api/marketplace/all-profiles - Se alle brukere
-- http://127.0.0.1:8000/api/marketplace/profile/x - Se bruker nr X, endre på brukernavn/phone/navn
+- http://127.0.0.1:8000/api/marketplace/profile/x/ - Se bruker nr X, endre på brukernavn/phone/navn
  
 
 
