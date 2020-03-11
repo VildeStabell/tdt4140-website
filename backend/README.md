@@ -118,8 +118,61 @@ Og en http melding `201 Created`
 
 #### Få tak i en liste av alle brukere:
 - Velg url http://localhost:8000/api/marketplace/all-profiles
-- Send en GET request 
+- Send en GET request
 
+#### Få opp liste med annonser
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/
+- Send GET request.
+- Skal da få opp en liste over sale items på dette formatet:
+
+```json
+[
+    {
+        "id": 1,
+        "title": "Test",
+        "creator": 1,
+        "price": 1000,
+        "description": "Look: a thing!",
+        "creation_date": "2020-03-11",
+        "img": "http://127.0.0.1:8000/media/images/Danseshow2018_1.JPG"
+    },
+    {
+        "id": 2,
+        "title": "Dette er en test",
+        "creator": 5,
+        "price": 1000,
+        "description": "Vær så snill å funk!",
+        "creation_date": "2020-03-11",
+        "img": "http://127.0.0.1:8000/media/images/Danseshow2019_4.JPG"
+    }
+]
+```
+
+#### Poste en annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/
+- Velg POST request
+- Krever token-autentisering (Se over)
+- Under headers velg Key = Content-Type, Value = multipart/form-data
+- Under body kryss av form-data
+- Skriv inn key values (en på hver rad): title, creator, price, description, img
+- For alle felt bortsatt fra img kan man bare skrive inn informasjonen som tekst inn i Value feltet
+- For img holder man musen over høyre side av Key feltet, og får opp en dropdown meny hvor man kan endre fra Text til File
+- (img kan også være null, kan da skrive som tekst)
+- Deretter trykker man Select files og velger bildet man vil ha med.
+Man skal da få tilbake en HTTP melding 201 Created og informasjon om posten på dette formatet:
+```json
+{
+    "id": 3,
+    "title": "Test3",
+    "creator": 5,
+    "price": 10,
+    "description": "Yo",
+    "creation_date": "2020-03-11",
+    "img": "http://127.0.0.1:8000/media/images/Danseshow2018_1_v3EFuv5.JPG"
+}
+```
+For noen pekere på hvordan man gjør dette i React se nederst på denne siden:
+https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
 
 ## I nettleseren:
 
@@ -133,46 +186,3 @@ Og en http melding `201 Created`
 - http://127.0.0.1:8000/auth/jwt/refresh - Refreshe access-token, lim inn en gyldig refresh token
 - http://localhost:8000/api/marketplace/all-profiles - Se alle brukere
 - http://127.0.0.1:8000/api/marketplace/profile/x - Se bruker nr X, endre på brukernavn/phone/navn
- 
-
-
-## Lage annonse
-Headers: 'content-type': 'mulitpart/form-data'
-URL: http://127.0.0.1:8000/api/marketplace/saleItems/
-
-fields:
-- title
-- creator  //id
-- price
-- description
-- img     //legg til image, image.name. Kan være null
-
-Se nederst på:
-https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
-
-evt. uten img:
-```json
-{
-    "title": "123"
-    "creator": 1
-    "price": 100
-    "description": "456"
-    "img": null
-}
-```
-
-## Finne annonser
-URL: http://127.0.0.1:8000/api/marketplace/saleItems/
-
-eksempel på et entry:
-```json
-{
-    "id": 1,
-    "title": "Test",
-    "creator": 1,
-    "price": 50000,
-    "description": "Dette er en test",
-    "creation_date": "2020-02-26",
-    "img": "http://127.0.0.1:8000/media/images/Prosjekt_ER1.png"
-}
-```
