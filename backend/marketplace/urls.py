@@ -7,12 +7,9 @@ urlpatterns = [
     path(
         'restricted/',
         restricted),
+
     path(
-        "all-profiles/",
-        UserProfileListCreateView.as_view(),
-        name="all-profiles"),
-    path(
-        "profile/<int:pk>",
+        "profile/<int:pk>/",
         UserProfileDetailView.as_view(),
         name="profile"),
 
