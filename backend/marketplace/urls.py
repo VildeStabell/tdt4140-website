@@ -8,17 +8,21 @@ urlpatterns = [
         'restricted/',
         restricted),
     path(
-        "all-profiles",
+        "all-profiles/",
         UserProfileListCreateView.as_view(),
         name="all-profiles"),
     path(
         "profile/<int:pk>",
         UserProfileDetailView.as_view(),
         name="profile"),
+
 ]
 
 
 # Router fixes urls for SaleItems
 router = DefaultRouter()
 router.register('saleItems', SaleItemView)
+router.register('admin', ForAdminUserView)
+
 urlpatterns += router.urls
+
