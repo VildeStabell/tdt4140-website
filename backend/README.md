@@ -182,6 +182,12 @@ https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-
 - Under body skriv inn fields man vil endre (title, creator og description må være med)
 - Man skal få opp info om posten som vist under Poste en annonse
 
+#### Slette annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/x/   (x er id til annonsen)
+- Velg DELETE
+- Krever token-autentisering (Se over)
+- Man vil få tilbake en HTTP 204 No Content
+
 ## I nettleseren:
 
 - Det meste er selvforklarende når man har kommet inn på sidene.
