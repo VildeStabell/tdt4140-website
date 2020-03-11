@@ -47,7 +47,7 @@ export default function App() {
           </Route>
           <Route path="/product">
             <Product
-              product={products[selectedProduct - 1]}
+              selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
             />
           </Route>
