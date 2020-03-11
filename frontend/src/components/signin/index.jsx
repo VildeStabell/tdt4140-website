@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn }) {
+export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -80,8 +81,16 @@ export default function SignIn({ setLoggedIn }) {
               label="Husk meg"
             />
             <Button
-              onClick={() => {
-                signIn(setRedirect, setLoggedIn, setOpenModal);
+              type="submit"
+              onClick={e => {
+                e.preventDefault();
+                signIn(
+                  setRedirect,
+                  setLoggedIn,
+                  setOpenModal,
+                  setAccesstoken,
+                  setUserID
+                );
               }}
               fullWidth
               variant="contained"
@@ -113,7 +122,13 @@ export default function SignIn({ setLoggedIn }) {
   );
 }
 
-async function signIn(setRedirect, setLoggedIn, setOpenModal) {
+async function signIn(
+  setRedirect,
+  setLoggedIn,
+  setOpenModal,
+  setAccesstoken,
+  setUserID
+) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const url = "http://localhost:8000/auth/jwt/create";
@@ -140,8 +155,26 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal) {
     .then(res => {
       if (!error) {
         console.log("Successfully logged in!");
-        localStorage.setItem("token", res.token);
+        console.log(res);
+        localStorage.setItem("refresh", res.refresh);
+        localStorage.setItem("access", res.access);
+        setAccesstoken(res.access);
         setLoggedIn(true);
+
+        axios
+          .get("http://localhost:8000/auth/users/me/", {
+            headers: {
+              Authorization: "Bearer " + res.access
+            }
+          })
+          .then(res => {
+            localStorage.setItem("userID", res.data.id);
+            setUserID(res.data.id);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
         setRedirect(<Redirect to={"/"} />);
       } else {
         console.log(res);
