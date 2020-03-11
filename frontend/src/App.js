@@ -11,6 +11,7 @@ import SignIn from "./components/signin";
 import Product from "./components/product";
 import SignUp from "./components/signup";
 import Loading from "./components/loading";
+import EditAdvert from "./components/editadvert";
 
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
@@ -44,6 +45,9 @@ export default function App() {
               product={products[selectedProduct - 1]}
               isLoggedIn={isLoggedIn}
             />
+          </Route>
+          <Route path="/editadvert">
+            <EditAdvert />
           </Route>
           <Route path="/">
             <Home products={products} callback={setSelectedProduct} />

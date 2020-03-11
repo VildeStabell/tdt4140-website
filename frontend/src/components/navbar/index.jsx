@@ -75,7 +75,12 @@ function signOut(setLoggedIn) {
 
 function NewAdd({ isLoggedIn }) {
   return isLoggedIn ? (
-    <Button variant="contained" startIcon={<AddIcon />}>
+    <Button
+      component={Link}
+      to="/editadvert"
+      variant="contained"
+      startIcon={<AddIcon />}
+    >
       Ny annonse
     </Button>
   ) : (
