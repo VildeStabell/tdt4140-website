@@ -9,7 +9,7 @@ from .serializers import SaleItemSerializer, UserSerializer
 from .models import SaleItem
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .permissions import IsOwnerProfileOrAdminOrReadOnly, IsOwnerProfileOrAdminOrReadOnlyForSaleItem
 from .models import User
 # from .serializers import UserSerializer
@@ -33,9 +33,10 @@ class SaleItemView(ModelViewSet):
     serializer_class = SaleItemSerializer
     permission_classes = [
         IsOwnerProfileOrAdminOrReadOnlyForSaleItem, IsAuthenticatedOrReadOnly]
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ["title", "description", "price",
                      "creator__username", "creator__email", "creator__first_name", "creator__last_name"]
+    ordering = ["-id"]
 
 
 class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
