@@ -65,11 +65,25 @@ export default function App() {
             <EditAdvert accessToken={accessToken} userID={userID} />
           </Route>
           <Route path="/">
-            <Home
-              products={products}
-              callback={setSelectedProduct}
-              getProducts={getProducts}
-            />
+            <Container maxWidth="md">
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item className="search">
+                  <Box m={2}>
+                    <SearchBar getProducts={getProducts} />
+                  </Box>
+                </Grid>
+                <Home
+                  products={products}
+                  callback={setSelectedProduct}
+                  getProducts={getProducts}
+                />
+              </Grid>
+            </Container>
           </Route>
         </Switch>
 
@@ -102,24 +116,15 @@ function Home({ products, callback, getProducts }) {
   ));
 
   return productList.length >= 1 ? (
-    <Container maxWidth="md">
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item className="search">
-          <Box m={2}>
-            <SearchBar getProducts={getProducts} />
-          </Box>
-        </Grid>
-        <Grid
-          item
-          container
-          spacing={4}
-          alignItems="flex-start"
-          justify="flex-start"
-        >
-          {productList}
-        </Grid>
-      </Grid>
-    </Container>
+    <Grid
+      item
+      container
+      spacing={4}
+      alignItems="flex-start"
+      justify="flex-start"
+    >
+      {productList}
+    </Grid>
   ) : (
     <Loading />
   );
