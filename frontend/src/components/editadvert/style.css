@@ -1,0 +1,12 @@
+.edit-advert {
+  margin-top: 16px;
+}
+
+.resp {
+  display: grid;
+  grid-template-columns: repeat(auto, 1fr);
+}
+
+.img-upload {
+  display: none;
+}
