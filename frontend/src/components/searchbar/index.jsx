@@ -1,12 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { TextField } from "@material-ui/core";
 
-export default class SearchBar extends Component {
-  render() {
-    return (
-      <div>
-        <TextField placeholder="Søk..." autoFocus fullWidth />
-      </div>
-    );
-  }
+export default function SearchBar({ getProducts }) {
+  return (
+    <div>
+      <TextField
+        placeholder="Søk..."
+        autoFocus
+        fullWidth
+        onChange={e => getProducts(e.target.value)}
+      />
+    </div>
+  );
 }
