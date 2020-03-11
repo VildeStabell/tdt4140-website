@@ -28,6 +28,7 @@ export default function Product({ selectedProduct, isLoggedIn }) {
     axios.get(productUrl).then(res => {
       console.log(res.data);
       setProduct(res.data);
+      setProductLoaded(true);
       const userUrl = "http://localhost:8000/auth/users/" + res.data.creator;
       axios
         .get(userUrl, {
@@ -38,7 +39,6 @@ export default function Product({ selectedProduct, isLoggedIn }) {
         .then(res => {
           console.log(res.data);
           setUser(res.data);
-          setProductLoaded(true);
         });
     });
   }, []);
