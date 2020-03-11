@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
 import "./style.css";
@@ -16,17 +17,17 @@ import EditAdvert from "./components/editadvert";
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem("access")
+  );
   const [isLoggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
+    localStorage.getItem("refresh") ? true : false
   );
 
   useEffect(() => {
-    console.log("User is logged in: " + isLoggedIn);
-    fetch("/mock.json")
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data);
-      });
+    const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+    axios.get(url).then(res => setProducts(res.data));
   }, []);
 
   return (
@@ -35,19 +36,23 @@ export default function App() {
         <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         <Switch>
           <Route path="/signin">
-            <SignIn setLoggedIn={setLoggedIn} />
+            <SignIn
+              setLoggedIn={setLoggedIn}
+              setAccesstoken={setAccessToken}
+              setUserID={setUserID}
+            />
           </Route>
           <Route path="/signup">
             <SignUp />
           </Route>
           <Route path="/product">
             <Product
-              product={products[selectedProduct - 1]}
+              selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert />
+            <EditAdvert accessToken={accessToken} userID={userID} />
           </Route>
           <Route path="/">
             <Home products={products} callback={setSelectedProduct} />
