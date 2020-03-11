@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn, setAccesstoken }) {
+export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -83,7 +84,13 @@ export default function SignIn({ setLoggedIn, setAccesstoken }) {
               type="submit"
               onClick={e => {
                 e.preventDefault();
-                signIn(setRedirect, setLoggedIn, setOpenModal, setAccesstoken);
+                signIn(
+                  setRedirect,
+                  setLoggedIn,
+                  setOpenModal,
+                  setAccesstoken,
+                  setUserID
+                );
               }}
               fullWidth
               variant="contained"
@@ -115,7 +122,13 @@ export default function SignIn({ setLoggedIn, setAccesstoken }) {
   );
 }
 
-async function signIn(setRedirect, setLoggedIn, setOpenModal, setAccesstoken) {
+async function signIn(
+  setRedirect,
+  setLoggedIn,
+  setOpenModal,
+  setAccesstoken,
+  setUserID
+) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const url = "http://localhost:8000/auth/jwt/create";
@@ -147,6 +160,21 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal, setAccesstoken) {
         localStorage.setItem("access", res.access);
         setAccesstoken(res.access);
         setLoggedIn(true);
+
+        axios
+          .get("http://localhost:8000/auth/users/me/", {
+            headers: {
+              Authorization: "Bearer" + " " + res.access
+            }
+          })
+          .then(res => {
+            localStorage.setItem("userID", res.data.id);
+            setUserID(res.data.id);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
         setRedirect(<Redirect to={"/"} />);
       } else {
         console.log(res);

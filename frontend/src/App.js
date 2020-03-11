@@ -16,6 +16,7 @@ import EditAdvert from "./components/editadvert";
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("access")
   );
@@ -38,7 +39,11 @@ export default function App() {
         <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
         <Switch>
           <Route path="/signin">
-            <SignIn setLoggedIn={setLoggedIn} setAccesstoken={setAccessToken} />
+            <SignIn
+              setLoggedIn={setLoggedIn}
+              setAccesstoken={setAccessToken}
+              setUserID={setUserID}
+            />
           </Route>
           <Route path="/signup">
             <SignUp />
