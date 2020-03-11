@@ -80,7 +80,9 @@ export default function SignIn({ setLoggedIn }) {
               label="Husk meg"
             />
             <Button
-              onClick={() => {
+              type="submit"
+              onClick={e => {
+                e.preventDefault();
                 signIn(setRedirect, setLoggedIn, setOpenModal);
               }}
               fullWidth
