@@ -133,15 +133,81 @@ Og en http melding `201 Created`
 - For å endre på info (kan ikke endre e-mail), velg PUT-request, og skriv inn endringene du vil gjøre på samme måte som når man lager en bruker. Alle felt trenger ikke deklareres, kun username.
 
 #### Endre en annen bruker\*:
-
-- \*krever admin (is_staff) tilgang
-- Velg url http://localhost:8000/api/marketplace/profile/x , der x = id nummer på user.
+-  \*krever admin (is_staff) tilgang
+- Velg url http://localhost:8000/api/marketplace/profile/x  , der x = id nummer på user.
 - Følg samme fremgangsmåte som i seksjonen over.
 
 #### Få tak i en liste av alle brukere:
-
 - Velg url http://localhost:8000/api/marketplace/all-profiles
 - Send en GET request
+
+#### Få opp liste med annonser
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/
+- Send GET request.
+- Skal da få opp en liste over sale items på dette formatet (Hvis det ikke er noen annonser blir listen []):
+
+```json
+[
+    {
+        "id": 1,
+        "title": "Test",
+        "creator": 1,
+        "price": 1000,
+        "description": "Look: a thing!",
+        "creation_date": "2020-03-11",
+        "img": "http://127.0.0.1:8000/media/images/Danseshow2018_1.JPG"
+    },
+    {
+        "id": 2,
+        "title": "Dette er en test",
+        "creator": 5,
+        "price": 1000,
+        "description": "Vær så snill å funk!",
+        "creation_date": "2020-03-11",
+        "img": "http://127.0.0.1:8000/media/images/Danseshow2019_4.JPG"
+    }
+]
+```
+
+#### Poste en annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/
+- Velg POST request
+- Krever token-autentisering (Se over)
+- Under headers velg Key = Content-Type, Value = multipart/form-data
+- Under body kryss av form-data
+- Skriv inn key values (en på hver rad): title, creator, price, description, img   (creator refererer til brukerID)
+- For alle felt bortsatt fra img kan man bare skrive inn informasjonen som tekst inn i Value feltet
+- For img holder man musen over høyre side av Key feltet, og får opp en dropdown meny hvor man kan endre fra Text til File
+- (img kan også være null, kan da skrive som tekst)
+- Deretter trykker man Select files og velger bildet man vil ha med.
+Man skal da få tilbake en HTTP melding 201 Created og informasjon om posten på dette formatet:
+```json
+{
+    "id": 3,
+    "title": "Test3",
+    "creator": 5,
+    "price": 10,
+    "description": "Yo",
+    "creation_date": "2020-03-11",
+    "img": "http://127.0.0.1:8000/media/images/Danseshow2018_1_v3EFuv5.JPG"
+}
+```
+For noen pekere på hvordan man gjør dette i React se nederst på denne siden:
+https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
+
+#### Endre annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/x/   (x er id til annonsen man vil endre)
+- Velg PUT
+- Krever token-autentisering (Se over)
+- Under headers sett Key = Content-Type, Value = multipart/form-data
+- Under body skriv inn fields man vil endre (title, creator og description må være med)
+- Man skal få opp info om posten som vist under Poste en annonse
+
+#### Slette annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/x/   (x er id til annonsen)
+- Velg DELETE
+- Krever token-autentisering (Se over)
+- Man vil få tilbake en HTTP 204 No Content
 
 ## I nettleseren:
 

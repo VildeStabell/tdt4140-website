@@ -12,10 +12,36 @@ import "./style.css";
 import MessageIcon from "@material-ui/icons/Message";
 import PersonIcon from "@material-ui/icons/Person";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
-export default function Product({ product, isLoggedIn }) {
-  const { user } = product || {};
-  const productLoaded = true;
+export default function Product({ selectedProduct, isLoggedIn }) {
+  const [product, setProduct] = useState({ img: "no image loaded" });
+  const [accessToken] = useState(localStorage.getItem("access"));
+  const [user, setUser] = useState(null);
+  const [productLoaded, setProductLoaded] = useState(false);
+
+  useEffect(() => {
+    const productUrl =
+      "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
+    axios.get(productUrl).then(res => {
+      console.log(res.data);
+      setProduct(res.data);
+      setProductLoaded(true);
+      const userUrl = "http://localhost:8000/auth/users/" + res.data.creator;
+      axios
+        .get(userUrl, {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
+        })
+        .then(res => {
+          console.log(res.data);
+          setUser(res.data);
+        });
+    });
+  }, []);
   return productLoaded ? (
     <div>
       <Container maxWidth="md">
@@ -45,17 +71,23 @@ export default function Product({ product, isLoggedIn }) {
 }
 
 function CheckLogInStatus({ user, isLoggedIn }) {
-  return isLoggedIn ? <ContactInfo user={user} /> : <NotLoggedIn />;
+  return isLoggedIn && user != null ? (
+    <ContactInfo user={user} />
+  ) : (
+    <NotLoggedIn />
+  );
 }
 
 function ContactInfo({ user }) {
-  const { name, telephone, email } = user || {};
   return (
     <Paper className="contact-info" elevation={10}>
       <Typography variant="caption">Selger:</Typography>
-      <Typography variant="h5">{name}</Typography>
-      <Typography>+47 {telephone}</Typography>
-      <Typography>{email}</Typography>
+      <Typography variant="h5">
+        {/* {user.first_name} {user.last_name} */}
+        {user.username}
+      </Typography>
+      <Typography>+47 {user.phone}</Typography>
+      <Typography>{user.email}</Typography>
       <Button
         component={Box}
         mt={2}
