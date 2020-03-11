@@ -13,7 +13,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 
-export default function EditAdvert({ accessToken }) {
+export default function EditAdvert({ accessToken, userID }) {
   const [openModal, setOpenModal] = useState(false);
   const [modalText, setModalText] = useState("");
   return (
@@ -79,7 +79,7 @@ export default function EditAdvert({ accessToken }) {
               color="primary"
               size="large"
               onClick={() => {
-                UpdateAdvert(accessToken, setOpenModal, setModalText);
+                UpdateAdvert(accessToken, setOpenModal, setModalText, userID);
               }}
             >
               Lagre annonse
@@ -100,7 +100,7 @@ export default function EditAdvert({ accessToken }) {
   );
 }
 
-function UpdateAdvert(accessToken, setOpenModal, setModalText) {
+function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
@@ -109,7 +109,7 @@ function UpdateAdvert(accessToken, setOpenModal, setModalText) {
 
   const form_data = new FormData();
   form_data.append("title", title);
-  form_data.append("creator", 1);
+  form_data.append("creator", userID);
   form_data.append("description", description);
   form_data.append("img", image.files[0]);
   form_data.append("price", price);

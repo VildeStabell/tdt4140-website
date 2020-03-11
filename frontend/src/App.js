@@ -55,7 +55,7 @@ export default function App() {
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert accessToken={accessToken} />
+            <EditAdvert accessToken={accessToken} userID={userID} />
           </Route>
           <Route path="/">
             <Home products={products} callback={setSelectedProduct} />
