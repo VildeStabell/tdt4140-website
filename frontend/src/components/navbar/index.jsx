@@ -69,7 +69,8 @@ function SignOutButton({ setLoggedIn }) {
 }
 
 function signOut(setLoggedIn) {
-  localStorage.removeItem("token");
+  localStorage.removeItem("refresh");
+  localStorage.removeItem("access");
   setLoggedIn(false);
 }
 
