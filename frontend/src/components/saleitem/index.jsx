@@ -19,11 +19,7 @@ export default function SaleItem({ productID, title, price, image }) {
   return (
     <Card className={classes.root}>
       <CardActionArea component={Link} to={`/product/${productID}`}>
-        <CardMedia
-          className={classes.media}
-          image={image}
-          title="Sofa til salgs"
-        />
+        <CardMedia className={classes.media} image={image} title={title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {title}

@@ -28,7 +28,8 @@ class UserProfileListCreateView(ListCreateAPIView):
 
 
 class SaleItemView(ModelViewSet):
-    permission_classes = [IsOwnerProfileOrAdminOrReadOnlyForSaleItem]
+    permission_classes = [
+        IsOwnerProfileOrAdminOrReadOnlyForSaleItem, IsAuthenticatedOrReadOnly]
     serializer_class = SaleItemSerializer
     queryset = SaleItem.objects.all()
 

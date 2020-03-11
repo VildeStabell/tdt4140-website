@@ -19,22 +19,6 @@ export default function App() {
     localStorage.getItem("token") ? true : false
   );
 
-  // const url = "http://www.mocky.io/v2/5e563dea300000610028e42b";
-
-  // useEffect(() => {
-  //   console.log("User is logged in: " + isLoggedIn);
-  //   fetch(url)
-  //     .then(response => {
-  //       if (response.status > 400) {
-  //         console.log("Error: " + response.status + response.statusText);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       setProducts(data);
-  //     });
-  // }, []);
-
   useEffect(() => {
     console.log("User is logged in: " + isLoggedIn);
     fetch("/mock.json")
