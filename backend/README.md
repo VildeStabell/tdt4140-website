@@ -14,7 +14,7 @@ I terminalen:
 - Kjør `python manage.py runsever`
 
 
-##Problem med server/migrations:
+## Problem med server/migrations:
 - Slett migrations-mappen i marketplace og slett databasefilen db.sqlite3
 - Kjør `python manage.py makemigrations` og `python manage.py migrate`
 
@@ -112,7 +112,7 @@ Og en http melding `201 Created`
 - For å endre på info (kan ikke endre e-mail), velg PUT-request, og skriv inn endringene du vil gjøre på samme måte som når man lager en bruker. Alle felt trenger ikke deklareres, kun username.
 
 #### Endre en annen bruker\*:
--  \*krever admin (is_staff) tilgang 
+-  \*krever admin (is_staff) tilgang
 - Velg url http://localhost:8000/api/marketplace/profile/x  , der x = id nummer på user.
 - Følg samme fremgangsmåte som i seksjonen over.
 
@@ -123,7 +123,7 @@ Og en http melding `201 Created`
 #### Få opp liste med annonser
 - Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/
 - Send GET request.
-- Skal da få opp en liste over sale items på dette formatet:
+- Skal da få opp en liste over sale items på dette formatet (Hvis det ikke er noen annonser blir listen []):
 
 ```json
 [
@@ -154,7 +154,7 @@ Og en http melding `201 Created`
 - Krever token-autentisering (Se over)
 - Under headers velg Key = Content-Type, Value = multipart/form-data
 - Under body kryss av form-data
-- Skriv inn key values (en på hver rad): title, creator, price, description, img
+- Skriv inn key values (en på hver rad): title, creator, price, description, img   (creator refererer til brukerID)
 - For alle felt bortsatt fra img kan man bare skrive inn informasjonen som tekst inn i Value feltet
 - For img holder man musen over høyre side av Key feltet, og får opp en dropdown meny hvor man kan endre fra Text til File
 - (img kan også være null, kan da skrive som tekst)
@@ -173,6 +173,14 @@ Man skal da få tilbake en HTTP melding 201 Created og informasjon om posten på
 ```
 For noen pekere på hvordan man gjør dette i React se nederst på denne siden:
 https://medium.com/@emeruchecole9/uploading-images-to-rest-api-backend-in-react-js-b931376b5833
+
+#### Endre annonse
+- Sett URL http://127.0.0.1:8000/api/marketplace/saleItems/x/   (x er id til annonsen man vil endre)
+- Velg PUT
+- Krever token-autentisering (Se over)
+- Under headers sett Key = Content-Type, Value = multipart/form-data
+- Under body skriv inn fields man vil endre (title, creator og description må være med)
+- Man skal få opp info om posten som vist under Poste en annonse
 
 ## I nettleseren:
 
