@@ -25,7 +25,6 @@ export default function App() {
   );
 
   useEffect(() => {
-    console.log("User is logged in: " + isLoggedIn);
     fetch("/mock.json")
       .then(res => res.json())
       .then(data => {

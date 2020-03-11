@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -164,7 +164,7 @@ async function signIn(
         axios
           .get("http://localhost:8000/auth/users/me/", {
             headers: {
-              Authorization: "Bearer" + " " + res.access
+              Authorization: "Bearer " + res.access
             }
           })
           .then(res => {

@@ -117,7 +117,7 @@ function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
   axios
     .post(url, form_data, {
       headers: {
-        Authorization: "Bearer" + " " + accessToken,
+        Authorization: "Bearer " + accessToken,
         "content-type":
           "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
       }
