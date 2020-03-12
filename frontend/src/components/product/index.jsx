@@ -29,7 +29,10 @@ export default function Product({ selectedProduct, isLoggedIn }) {
       console.log(res.data);
       setProduct(res.data);
       setProductLoaded(true);
-      const userUrl = "http://localhost:8000/auth/users/" + res.data.creator;
+      const userUrl =
+        "http://localhost:8000/api/marketplace/profile/" +
+        res.data.creator +
+        "/";
       axios
         .get(userUrl, {
           headers: {
