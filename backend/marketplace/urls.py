@@ -8,13 +8,12 @@ urlpatterns = [
         'restricted/',
         restricted),
     path(
-        "all-profiles",
+        "all-profiles/",
         UserProfileListCreateView.as_view(),
         name="all-profiles"),
     path(
-        "profile/<int:pk>",
-        UserProfileDetailView.as_view(),
-        name="profile"),
+        "profile/<int:pk>/",
+        UserProfileDetailView.as_view()),
 ]
 
 
