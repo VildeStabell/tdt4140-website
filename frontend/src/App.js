@@ -59,6 +59,7 @@ export default function App() {
             <Product
               selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
+              user={user}
             />
           </Route>
           <Route path="/editadvert">

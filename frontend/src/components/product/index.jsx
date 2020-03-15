@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-export default function Product({ selectedProduct, isLoggedIn }) {
+export default function Product({ selectedProduct, isLoggedIn, user }) {
   const [product, setProduct] = useState({ img: "no image loaded" });
   const [accessToken] = useState(localStorage.getItem("access"));
   const [creator, setCreator] = useState(null);
@@ -42,6 +42,7 @@ export default function Product({ selectedProduct, isLoggedIn }) {
         .then(res => {
           console.log(res.data);
           setCreator(res.data);
+          console.log("Can delete: " + canDelete(res.data, user));
         });
     });
   }, []);
@@ -139,4 +140,6 @@ function ProductInfo({ product }) {
   );
 }
 
-function canDelete()
+function canDelete(creator, user) {
+  return creator.id === user.id;
+}
