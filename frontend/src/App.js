@@ -17,7 +17,7 @@ import EditAdvert from "./components/editadvert";
 export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
+  const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("access")
   );
@@ -49,7 +49,7 @@ export default function App() {
             <SignIn
               setLoggedIn={setLoggedIn}
               setAccesstoken={setAccessToken}
-              setUserID={setUserID}
+              setUser={setUser}
             />
           </Route>
           <Route path="/signup">
@@ -62,7 +62,7 @@ export default function App() {
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert accessToken={accessToken} userID={userID} />
+            <EditAdvert accessToken={accessToken} user={user} />
           </Route>
           <Route path="/">
             <Container maxWidth="md">

@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
+export default function SignIn({ setLoggedIn, setAccesstoken, setUser }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -89,7 +89,7 @@ export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
                   setLoggedIn,
                   setOpenModal,
                   setAccesstoken,
-                  setUserID
+                  setUser
                 );
               }}
               fullWidth
@@ -127,7 +127,7 @@ async function signIn(
   setLoggedIn,
   setOpenModal,
   setAccesstoken,
-  setUserID
+  setUser
 ) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -168,8 +168,7 @@ async function signIn(
             }
           })
           .then(res => {
-            localStorage.setItem("userID", res.data.id);
-            setUserID(res.data.id);
+            setUser(res.data);
           })
           .catch(err => {
             console.log(err);
