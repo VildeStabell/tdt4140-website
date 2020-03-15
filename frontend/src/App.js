@@ -27,6 +27,7 @@ export default function App() {
 
   useEffect(() => {
     getProducts("");
+    refresh();
   }, []);
 
   function getProducts(query) {
@@ -38,6 +39,27 @@ export default function App() {
         "http://127.0.0.1:8000/api/marketplace/saleItems?search=" + query;
       axios.get(url).then(res => setProducts(res.data));
     }
+  }
+
+  function refresh() {
+    const refreshUrl = "http://localhost:8000/auth/jwt/refresh";
+    axios
+      .post(
+        refreshUrl,
+        {
+          refresh: localStorage.getItem("refresh")
+        },
+        {
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      )
+      .then(res => setAccessToken(res.data.access))
+      .catch(() => {
+        console.log("Refresh token expired!");
+        setLoggedIn(false);
+      });
   }
 
   return (
