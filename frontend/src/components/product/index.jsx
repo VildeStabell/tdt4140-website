@@ -19,7 +19,7 @@ import { useState } from "react";
 export default function Product({ selectedProduct, isLoggedIn }) {
   const [product, setProduct] = useState({ img: "no image loaded" });
   const [accessToken] = useState(localStorage.getItem("access"));
-  const [user, setUser] = useState(null);
+  const [creator, setCreator] = useState(null);
   const [productLoaded, setProductLoaded] = useState(false);
 
   useEffect(() => {
@@ -29,19 +29,19 @@ export default function Product({ selectedProduct, isLoggedIn }) {
       console.log(res.data);
       setProduct(res.data);
       setProductLoaded(true);
-      const userUrl =
+      const creatorUrl =
         "http://localhost:8000/api/marketplace/profile/" +
         res.data.creator +
         "/";
       axios
-        .get(userUrl, {
+        .get(creatorUrl, {
           headers: {
             Authorization: "Bearer " + accessToken
           }
         })
         .then(res => {
           console.log(res.data);
-          setUser(res.data);
+          setCreator(res.data);
         });
     });
   }, []);
@@ -56,7 +56,7 @@ export default function Product({ selectedProduct, isLoggedIn }) {
             {null}
           </Grid>
           <Grid item xs={12} md={4}>
-            <CheckLogInStatus user={user} isLoggedIn={isLoggedIn} />
+            <CheckLogInStatus creator={creator} isLoggedIn={isLoggedIn} />
           </Grid>
           <Grid item sm={12} md={7}>
             <ProductInfo product={product} />
@@ -73,24 +73,24 @@ export default function Product({ selectedProduct, isLoggedIn }) {
   );
 }
 
-function CheckLogInStatus({ user, isLoggedIn }) {
-  return isLoggedIn && user != null ? (
-    <ContactInfo user={user} />
+function CheckLogInStatus({ creator, isLoggedIn }) {
+  return isLoggedIn && creator != null ? (
+    <ContactInfo creator={creator} />
   ) : (
     <NotLoggedIn />
   );
 }
 
-function ContactInfo({ user }) {
+function ContactInfo({ creator }) {
   return (
     <Paper className="contact-info" elevation={10}>
       <Typography variant="caption">Selger:</Typography>
       <Typography variant="h5">
-        {/* {user.first_name} {user.last_name} */}
-        {user.username}
+        {/* {creator.first_name} {creator.last_name} */}
+        {creator.username}
       </Typography>
-      <Typography>+47 {user.phone}</Typography>
-      <Typography>{user.email}</Typography>
+      <Typography>+47 {creator.phone}</Typography>
+      <Typography>{creator.email}</Typography>
       <Button
         component={Box}
         mt={2}
@@ -138,3 +138,5 @@ function ProductInfo({ product }) {
     </Grid>
   );
 }
+
+function canDelete()
