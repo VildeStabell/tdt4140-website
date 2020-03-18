@@ -15,7 +15,9 @@ import Loading from "./components/loading";
 import EditAdvert from "./components/editadvert";
 
 export default function App() {
-  const [selectedProduct, setSelectedProduct] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState(
+    localStorage.getItem("selectedProduct")
+  );
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
@@ -127,7 +129,10 @@ function Home({ products, callback, getProducts }) {
       sm={6}
       md={4}
       lg={3}
-      onClick={() => callback(product.id)}
+      onClick={() => {
+        callback(product.id);
+        localStorage.setItem("selectedProduct", product.id);
+      }}
     >
       <SaleItem
         productID={product.id}
