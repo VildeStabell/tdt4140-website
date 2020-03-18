@@ -16,9 +16,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-export default function Product({ selectedProduct, isLoggedIn, user }) {
+export default function Product({
+  selectedProduct,
+  isLoggedIn,
+  user,
+  refresh,
+  accessToken
+}) {
   const [product, setProduct] = useState({ img: "no image loaded" });
-  const [accessToken] = useState(localStorage.getItem("access"));
   const [creator, setCreator] = useState(null);
   const [productLoaded, setProductLoaded] = useState(false);
 
@@ -43,6 +48,10 @@ export default function Product({ selectedProduct, isLoggedIn, user }) {
           console.log(res.data);
           setCreator(res.data);
           console.log("Can delete: " + canDelete(res.data, user));
+        })
+        .catch(() => {
+          console.log("Attempting to refresh accesstoken");
+          refresh();
         });
     });
   }, []);

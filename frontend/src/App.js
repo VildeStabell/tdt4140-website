@@ -18,9 +18,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(1);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState(null);
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access")
-  );
+  const [accessToken, setAccessToken] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(
     localStorage.getItem("refresh") ? true : false
   );
@@ -82,6 +80,8 @@ export default function App() {
               selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
               user={user}
+              refresh={refresh}
+              accessToken={accessToken}
             />
           </Route>
           <Route path="/editadvert">
