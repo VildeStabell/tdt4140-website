@@ -27,7 +27,9 @@ export default function App() {
 
   useEffect(() => {
     getProducts("");
-    refresh();
+    if (isLoggedIn) {
+      refresh();
+    }
   }, []);
 
   function getProducts(query) {

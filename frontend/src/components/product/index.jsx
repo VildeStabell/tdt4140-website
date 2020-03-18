@@ -38,21 +38,22 @@ export default function Product({
         "http://localhost:8000/api/marketplace/profile/" +
         res.data.creator +
         "/";
-      axios
-        .get(creatorUrl, {
-          headers: {
-            Authorization: "Bearer " + accessToken
-          }
-        })
-        .then(res => {
-          console.log(res.data);
-          setCreator(res.data);
-          console.log("Can delete: " + canDelete(res.data, user));
-        })
-        .catch(() => {
-          console.log("Attempting to refresh accesstoken");
-          refresh();
-        });
+      if (isLoggedIn) {
+        axios
+          .get(creatorUrl, {
+            headers: {
+              Authorization: "Bearer " + accessToken
+            }
+          })
+          .then(res => {
+            console.log("Successfully loaded creator info");
+            setCreator(res.data);
+          })
+          .catch(err => {
+            console.error("Failed to load creator info");
+            refresh();
+          });
+      }
     });
   }, []);
   return productLoaded ? (
