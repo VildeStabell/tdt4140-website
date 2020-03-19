@@ -94,7 +94,11 @@ export default function App() {
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert accessToken={accessToken} user={user} />
+            <EditAdvert
+              accessToken={accessToken}
+              user={user}
+              getProducts={getProducts}
+            />
           </Route>
           <Route path="/">
             <Container maxWidth="md">
