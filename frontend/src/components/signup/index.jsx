@@ -101,6 +101,7 @@ export default function SignUp() {
                   autoComplete="current-password"
                 />
               </Grid>
+              {/* TODO: Terms of service page
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -108,7 +109,7 @@ export default function SignUp() {
                   }
                   label="Jeg godtar betingelsene."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               onClick={() => signUp(setRedirect, setOpenModal)}
