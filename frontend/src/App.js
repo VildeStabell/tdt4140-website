@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
@@ -15,19 +15,48 @@ import Loading from "./components/loading";
 import EditAdvert from "./components/editadvert";
 
 export default function App() {
-  const [selectedProduct, setSelectedProduct] = useState(1);
-  const [products, setProducts] = useState([]);
-  const [userID, setUserID] = useState(localStorage.getItem("userID"));
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem("access")
+  const [selectedProduct, setSelectedProduct] = useState(
+    localStorage.getItem("selectedProduct")
   );
+  const [products, setProducts] = useState([]);
+  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(
     localStorage.getItem("refresh") ? true : false
   );
 
+  const refresh = useCallback(() => {
+    const refreshUrl = "http://localhost:8000/auth/jwt/refresh";
+    axios
+      .post(
+        refreshUrl,
+        {
+          refresh: localStorage.getItem("refresh")
+        },
+        {
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      )
+      .then(res => {
+        console.log("Successfully refreshed access token");
+        setAccessToken(res.data.access);
+      })
+      .catch(() => {
+        console.error("Refresh token expired!");
+        setLoggedIn(false);
+      });
+  }, [setAccessToken, setLoggedIn]);
+
   useEffect(() => {
+    console.log("%cReloading app component", "color: orange");
+    setUser(JSON.parse(localStorage.getItem("user")));
     getProducts("");
-  }, []);
+    if (isLoggedIn) {
+      refresh();
+    }
+  }, [isLoggedIn, refresh]);
 
   function getProducts(query) {
     if (query === "") {
@@ -49,7 +78,7 @@ export default function App() {
             <SignIn
               setLoggedIn={setLoggedIn}
               setAccesstoken={setAccessToken}
-              setUserID={setUserID}
+              setUser={setUser}
             />
           </Route>
           <Route path="/signup">
@@ -59,10 +88,18 @@ export default function App() {
             <Product
               selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
+              user={user}
+              refresh={refresh}
+              accessToken={accessToken}
+              getProducts={getProducts}
             />
           </Route>
           <Route path="/editadvert">
-            <EditAdvert accessToken={accessToken} userID={userID} />
+            <EditAdvert
+              accessToken={accessToken}
+              user={user}
+              getProducts={getProducts}
+            />
           </Route>
           <Route path="/">
             <Container maxWidth="md">
@@ -104,7 +141,10 @@ function Home({ products, callback, getProducts }) {
       sm={6}
       md={4}
       lg={3}
-      onClick={() => callback(product.id)}
+      onClick={() => {
+        callback(product.id);
+        localStorage.setItem("selectedProduct", product.id);
+      }}
     >
       <SaleItem
         productID={product.id}

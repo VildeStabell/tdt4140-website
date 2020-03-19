@@ -12,11 +12,15 @@ import ImageIcon from "@material-ui/icons/Image";
 import axios from "axios";
 import { useState } from "react";
 import { Alert } from "@material-ui/lab";
+import { Redirect } from "react-router-dom";
 
-export default function EditAdvert({ accessToken, userID }) {
+export default function EditAdvert({ accessToken, user, getProducts }) {
   const [openModal, setOpenModal] = useState(false);
   const [modalText, setModalText] = useState("");
-  return (
+  const [redirect, setRedirect] = useState(false);
+  return redirect ? (
+    <Redirect to="/" />
+  ) : (
     <div>
       <Container maxWidth="sm" className="edit-advert">
         <Grid container direction="column" spacing={2}>
@@ -34,6 +38,7 @@ export default function EditAdvert({ accessToken, userID }) {
           </Grid>
           <Grid item>
             <TextField
+              type="number"
               fullWidth
               autoComplete="off"
               id="price"
@@ -79,7 +84,14 @@ export default function EditAdvert({ accessToken, userID }) {
               color="primary"
               size="large"
               onClick={() => {
-                UpdateAdvert(accessToken, setOpenModal, setModalText, userID);
+                UpdateAdvert(
+                  accessToken,
+                  setOpenModal,
+                  setModalText,
+                  user,
+                  getProducts,
+                  setRedirect
+                );
               }}
             >
               Lagre annonse
@@ -100,7 +112,14 @@ export default function EditAdvert({ accessToken, userID }) {
   );
 }
 
-function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
+function UpdateAdvert(
+  accessToken,
+  setOpenModal,
+  setModalText,
+  user,
+  getProducts,
+  setRedirect
+) {
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
@@ -109,7 +128,7 @@ function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
 
   const form_data = new FormData();
   form_data.append("title", title);
-  form_data.append("creator", userID);
+  form_data.append("creator", user.id);
   form_data.append("description", description);
   form_data.append("img", image.files[0]);
   form_data.append("price", price);
@@ -123,8 +142,9 @@ function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
       }
     })
     .then(res => {
-      console.log(res.data);
-      console.log("Success!");
+      console.log("Successfully created new advert!");
+      getProducts("");
+      setRedirect(true);
     })
     .catch(err => {
       if (err.response.status === 401) {
@@ -134,7 +154,7 @@ function UpdateAdvert(accessToken, setOpenModal, setModalText, userID) {
       } else {
         setModalText(err.response.status + ": " + err.response.statusText);
       }
-      console.log(err);
+      console.error(err);
       setOpenModal(true);
     });
 }
