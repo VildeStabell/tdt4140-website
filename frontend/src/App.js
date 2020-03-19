@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
@@ -25,25 +25,7 @@ export default function App() {
     localStorage.getItem("refresh") ? true : false
   );
 
-  useEffect(() => {
-    getProducts("");
-    if (isLoggedIn) {
-      refresh();
-    }
-  }, []);
-
-  function getProducts(query) {
-    if (query === "") {
-      const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
-      axios.get(url).then(res => setProducts(res.data));
-    } else {
-      const url =
-        "http://127.0.0.1:8000/api/marketplace/saleItems?search=" + query;
-      axios.get(url).then(res => setProducts(res.data));
-    }
-  }
-
-  function refresh() {
+  const refresh = useCallback(() => {
     const refreshUrl = "http://localhost:8000/auth/jwt/refresh";
     axios
       .post(
@@ -57,11 +39,34 @@ export default function App() {
           }
         }
       )
-      .then(res => setAccessToken(res.data.access))
+      .then(res => {
+        console.log("Successfully refreshed access token");
+        setAccessToken(res.data.access);
+      })
       .catch(() => {
-        console.log("Refresh token expired!");
+        console.error("Refresh token expired!");
         setLoggedIn(false);
       });
+  }, [setAccessToken, setLoggedIn]);
+
+  useEffect(() => {
+    console.log("%cReloading app component", "color: orange");
+    setUser(JSON.parse(localStorage.getItem("user")));
+    getProducts("");
+    if (isLoggedIn) {
+      refresh();
+    }
+  }, [isLoggedIn, refresh]);
+
+  function getProducts(query) {
+    if (query === "") {
+      const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+      axios.get(url).then(res => setProducts(res.data));
+    } else {
+      const url =
+        "http://127.0.0.1:8000/api/marketplace/saleItems?search=" + query;
+      axios.get(url).then(res => setProducts(res.data));
+    }
   }
 
   return (

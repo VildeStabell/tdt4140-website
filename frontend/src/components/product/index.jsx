@@ -55,7 +55,7 @@ export default function Product({
           });
       }
     });
-  }, []);
+  }, [accessToken, isLoggedIn, refresh, selectedProduct]);
   return productLoaded ? (
     <div>
       <Container maxWidth="md">
