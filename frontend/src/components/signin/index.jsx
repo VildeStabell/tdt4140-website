@@ -3,8 +3,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
+export default function SignIn({ setLoggedIn, setAccesstoken, setUser }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -76,10 +76,6 @@ export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
               id="password"
               autoComplete="off"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Husk meg"
-            />
             <Button
               type="submit"
               onClick={e => {
@@ -89,7 +85,7 @@ export default function SignIn({ setLoggedIn, setAccesstoken, setUserID }) {
                   setLoggedIn,
                   setOpenModal,
                   setAccesstoken,
-                  setUserID
+                  setUser
                 );
               }}
               fullWidth
@@ -127,7 +123,7 @@ async function signIn(
   setLoggedIn,
   setOpenModal,
   setAccesstoken,
-  setUserID
+  setUser
 ) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -146,7 +142,6 @@ async function signIn(
   })
     .then(res => {
       if (res.status >= 400) {
-        console.log("Error");
         error = true;
         setOpenModal(true);
       }
@@ -155,9 +150,7 @@ async function signIn(
     .then(res => {
       if (!error) {
         console.log("Successfully logged in!");
-        console.log(res);
         localStorage.setItem("refresh", res.refresh);
-        localStorage.setItem("access", res.access);
         setAccesstoken(res.access);
         setLoggedIn(true);
 
@@ -168,16 +161,16 @@ async function signIn(
             }
           })
           .then(res => {
-            localStorage.setItem("userID", res.data.id);
-            setUserID(res.data.id);
+            localStorage.setItem("user", JSON.stringify(res.data));
+            setUser(res.data);
           })
           .catch(err => {
-            console.log(err);
+            console.error(err);
           });
 
         setRedirect(<Redirect to={"/"} />);
       } else {
-        console.log(res);
+        console.error(res);
       }
     });
 }
