@@ -38,6 +38,7 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
           </Grid>
           <Grid item>
             <TextField
+              type="number"
               fullWidth
               autoComplete="off"
               id="price"
