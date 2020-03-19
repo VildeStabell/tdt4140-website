@@ -23,3 +23,7 @@
 .loader-container {
   height: 100vh;
 }
+
+.admin {
+  padding: 10px 10px 10px 0;
+}
