@@ -14,10 +14,37 @@ import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 import { Redirect } from "react-router-dom";
 
-export default function EditAdvert({ accessToken, user, getProducts }) {
+export default function EditAdvert({
+  accessToken,
+  user,
+  getProducts,
+  editProduct,
+  selectedProduct
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [modalText, setModalText] = useState("");
   const [redirect, setRedirect] = useState(false);
+
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  // const [image, setImage] = useState("");
+  const [id, setId] = useState("");
+
+  if (editProduct) {
+    const productUrl =
+      "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
+    axios.get(productUrl).then(res => {
+      console.log("Successfully loaded product info");
+      console.log(res.data);
+      setTitle(res.data.title);
+      setPrice(res.data.price);
+      setDescription(res.data.description);
+      // setImage(res.data.img);
+      setId(res.data.id);
+    });
+  }
+
   return redirect ? (
     <Redirect to="/" />
   ) : (
@@ -34,6 +61,8 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
               fullWidth
               variant="outlined"
               label="Tittel"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
             ></TextField>
           </Grid>
           <Grid item>
@@ -44,6 +73,8 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
               id="price"
               variant="outlined"
               label="Pris i NOK"
+              value={price}
+              onChange={e => setPrice(e.target.value)}
             ></TextField>
           </Grid>
           <Grid item>
@@ -56,6 +87,8 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
               rowsMax="16"
               variant="outlined"
               label="Beskrivelse av salgsgjenstanden"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
             ></TextField>
           </Grid>
           <Grid item>
@@ -65,6 +98,8 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
               id="contained-button-file"
               multiple
               type="file"
+              // value={image}
+              // onChange={e => setImage(e.target.value)}
             />
             <label htmlFor="contained-button-file">
               <Button
@@ -90,7 +125,9 @@ export default function EditAdvert({ accessToken, user, getProducts }) {
                   setModalText,
                   user,
                   getProducts,
-                  setRedirect
+                  setRedirect,
+                  editProduct,
+                  selectedProduct
                 );
               }}
             >
@@ -118,8 +155,11 @@ function UpdateAdvert(
   setModalText,
   user,
   getProducts,
-  setRedirect
+  setRedirect,
+  editProduct,
+  selectedProduct
 ) {
+  console.log(editProduct);
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
@@ -133,28 +173,55 @@ function UpdateAdvert(
   form_data.append("img", image.files[0]);
   form_data.append("price", price);
 
-  axios
-    .post(url, form_data, {
-      headers: {
-        Authorization: "Bearer " + accessToken,
-        "content-type":
-          "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
-      }
-    })
-    .then(res => {
-      console.log("Successfully created new advert!");
-      getProducts("");
-      setRedirect(true);
-    })
-    .catch(err => {
-      if (err.response.status === 401) {
-        setModalText("Din tilgangstoken har utløpt...");
-      } else if (err.response.status === 400) {
-        setModalText("Alle felter må fylles ut!");
-      } else {
-        setModalText(err.response.status + ": " + err.response.statusText);
-      }
-      console.error(err);
-      setOpenModal(true);
-    });
+  if (editProduct) {
+    axios
+      .put(url + selectedProduct, form_data, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "content-type":
+            "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+        }
+      })
+      .then(res => {
+        console.log("Successfully updated advert!");
+        getProducts("");
+        setRedirect(true);
+      })
+      .catch(err => {
+        if (err.response.status === 401) {
+          setModalText("Din tilgangstoken har utløpt...");
+        } else if (err.response.status === 400) {
+          setModalText("Alle felter må fylles ut!");
+        } else {
+          setModalText(err.response.status + ": " + err.response.statusText);
+        }
+        console.error(err);
+        setOpenModal(true);
+      });
+  } else {
+    axios
+      .post(url, form_data, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+          "content-type":
+            "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+        }
+      })
+      .then(res => {
+        console.log("Successfully created new advert!");
+        getProducts("");
+        setRedirect(true);
+      })
+      .catch(err => {
+        if (err.response.status === 401) {
+          setModalText("Din tilgangstoken har utløpt...");
+        } else if (err.response.status === 400) {
+          setModalText("Alle felter må fylles ut!");
+        } else {
+          setModalText(err.response.status + ": " + err.response.statusText);
+        }
+        console.error(err);
+        setOpenModal(true);
+      });
+  }
 }
