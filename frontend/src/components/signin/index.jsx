@@ -156,7 +156,6 @@ async function signIn(
         console.log("Successfully logged in!");
         console.log(res);
         localStorage.setItem("refresh", res.refresh);
-        localStorage.setItem("access", res.access);
         setAccesstoken(res.access);
         setLoggedIn(true);
 

@@ -70,7 +70,6 @@ function SignOutButton({ setLoggedIn }) {
 
 function signOut(setLoggedIn) {
   localStorage.removeItem("refresh");
-  localStorage.removeItem("access");
   setLoggedIn(false);
 }
 
