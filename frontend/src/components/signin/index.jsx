@@ -167,6 +167,7 @@ async function signIn(
             }
           })
           .then(res => {
+            localStorage.setItem("user", JSON.stringify(res.data));
             setUser(res.data);
           })
           .catch(err => {

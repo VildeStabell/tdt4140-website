@@ -11,10 +11,11 @@ import {
 import "./style.css";
 import MessageIcon from "@material-ui/icons/Message";
 import PersonIcon from "@material-ui/icons/Person";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 export default function Product({
   selectedProduct,
@@ -23,6 +24,7 @@ export default function Product({
   refresh,
   accessToken
 }) {
+  const [redirect, setRedirect] = useState(false);
   const [product, setProduct] = useState({ img: "no image loaded" });
   const [creator, setCreator] = useState(null);
   const [productLoaded, setProductLoaded] = useState(false);
@@ -57,32 +59,48 @@ export default function Product({
       }
     });
   }, [accessToken, isLoggedIn, refresh, selectedProduct]);
-  return productLoaded ? (
-    <div>
-      <Container maxWidth="md">
-        <Grid container alignItems="center">
-          <Grid item xs={12} md={6} className="product-image">
-            <img src={product.img} alt="" className="display-img" />
+  if (redirect) {
+    return <Redirect to="/" />;
+  } else {
+    return productLoaded ? (
+      <div>
+        <Container maxWidth="md">
+          <Grid container>
+            <Grid item xs={6} md={3} className="admin">
+              <DeleteBtn
+                creator={creator}
+                user={user}
+                isLoggedIn={isLoggedIn}
+                accessToken={accessToken}
+                selectedProduct={selectedProduct}
+                setRedirect={setRedirect}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={false} md={2}>
-            {null}
+          <Grid container alignItems="center">
+            <Grid item xs={12} md={6} className="product-image">
+              <img src={product.img} alt="" className="display-img" />
+            </Grid>
+            <Grid item xs={false} md={2}>
+              {null}
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <CheckLogInStatus creator={creator} isLoggedIn={isLoggedIn} />
+            </Grid>
+            <Grid item sm={12} md={7}>
+              <ProductInfo product={product} />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <CheckLogInStatus creator={creator} isLoggedIn={isLoggedIn} />
-          </Grid>
-          <Grid item sm={12} md={7}>
-            <ProductInfo product={product} />
-          </Grid>
-        </Grid>
-      </Container>
-    </div>
-  ) : (
-    <div className="loader-container">
-      <div className="loader">
-        <CircularProgress />
+        </Container>
       </div>
-    </div>
-  );
+    ) : (
+      <div className="loader-container">
+        <div className="loader">
+          <CircularProgress />
+        </div>
+      </div>
+    );
+  }
 }
 
 function CheckLogInStatus({ creator, isLoggedIn }) {
@@ -151,6 +169,42 @@ function ProductInfo({ product }) {
   );
 }
 
-function canDelete(creator, user) {
-  return creator.id === user.id;
+function DeleteBtn({
+  creator,
+  user,
+  isLoggedIn,
+  accessToken,
+  selectedProduct,
+  setRedirect
+}) {
+  return isLoggedIn &&
+    creator != null &&
+    user != null &&
+    creator.id === user.id ? (
+    <Button
+      fullWidth
+      className="admin-btn"
+      variant="contained"
+      color="secondary"
+      startIcon={<DeleteIcon />}
+      onClick={() => deleteProduct(accessToken, selectedProduct, setRedirect)}
+    >
+      Slett annonse
+    </Button>
+  ) : (
+    <></>
+  );
+}
+
+function deleteProduct(accessToken, selectedProduct, setRedirect) {
+  const deleteUrl =
+    "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
+  axios
+    .delete(deleteUrl, {
+      headers: {
+        Authorization: "Bearer " + accessToken
+      }
+    })
+    .then(() => setRedirect(true))
+    .catch(err => console.error(err));
 }
