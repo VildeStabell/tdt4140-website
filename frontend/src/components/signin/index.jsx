@@ -76,10 +76,6 @@ export default function SignIn({ setLoggedIn, setAccesstoken, setUser }) {
               id="password"
               autoComplete="off"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Husk meg"
-            />
             <Button
               type="submit"
               onClick={e => {
