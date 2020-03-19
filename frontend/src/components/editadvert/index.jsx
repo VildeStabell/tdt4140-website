@@ -13,6 +13,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Alert } from "@material-ui/lab";
 import { Redirect } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function EditAdvert({
   accessToken,
@@ -31,19 +32,20 @@ export default function EditAdvert({
   // const [image, setImage] = useState("");
   const [id, setId] = useState("");
 
-  if (editProduct) {
-    const productUrl =
-      "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
-    axios.get(productUrl).then(res => {
-      console.log("Successfully loaded product info");
-      console.log(res.data);
-      setTitle(res.data.title);
-      setPrice(res.data.price);
-      setDescription(res.data.description);
-      // setImage(res.data.img);
-      setId(res.data.id);
-    });
-  }
+  useEffect(() => {
+    if (editProduct) {
+      const productUrl =
+        "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
+      axios.get(productUrl).then(res => {
+        console.log("Successfully loaded product info");
+        setTitle(res.data.title);
+        setPrice(res.data.price);
+        setDescription(res.data.description);
+        // setImage(res.data.img);
+        setId(res.data.id);
+      });
+    }
+  }, []);
 
   return redirect ? (
     <Redirect to="/" />
@@ -159,7 +161,6 @@ function UpdateAdvert(
   editProduct,
   selectedProduct
 ) {
-  console.log(editProduct);
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
