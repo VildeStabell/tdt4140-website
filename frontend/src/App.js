@@ -91,6 +91,7 @@ export default function App() {
               user={user}
               refresh={refresh}
               accessToken={accessToken}
+              getProducts={getProducts}
             />
           </Route>
           <Route path="/editadvert">

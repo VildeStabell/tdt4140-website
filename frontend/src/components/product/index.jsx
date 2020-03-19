@@ -22,7 +22,8 @@ export default function Product({
   isLoggedIn,
   user,
   refresh,
-  accessToken
+  accessToken,
+  getProducts
 }) {
   const [redirect, setRedirect] = useState(false);
   const [product, setProduct] = useState({ img: "no image loaded" });
@@ -74,6 +75,7 @@ export default function Product({
                 accessToken={accessToken}
                 selectedProduct={selectedProduct}
                 setRedirect={setRedirect}
+                getProducts={getProducts}
               />
             </Grid>
           </Grid>
@@ -175,7 +177,8 @@ function DeleteBtn({
   isLoggedIn,
   accessToken,
   selectedProduct,
-  setRedirect
+  setRedirect,
+  getProducts
 }) {
   return isLoggedIn &&
     creator != null &&
@@ -187,7 +190,9 @@ function DeleteBtn({
       variant="contained"
       color="secondary"
       startIcon={<DeleteIcon />}
-      onClick={() => deleteProduct(accessToken, selectedProduct, setRedirect)}
+      onClick={() =>
+        deleteProduct(accessToken, selectedProduct, setRedirect, getProducts)
+      }
     >
       Slett annonse
     </Button>
@@ -196,7 +201,7 @@ function DeleteBtn({
   );
 }
 
-function deleteProduct(accessToken, selectedProduct, setRedirect) {
+function deleteProduct(accessToken, selectedProduct, setRedirect, getProducts) {
   const deleteUrl =
     "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
   axios
@@ -205,6 +210,9 @@ function deleteProduct(accessToken, selectedProduct, setRedirect) {
         Authorization: "Bearer " + accessToken
       }
     })
-    .then(() => setRedirect(true))
+    .then(() => {
+      getProducts("");
+      setRedirect(true);
+    })
     .catch(err => console.error(err));
 }
