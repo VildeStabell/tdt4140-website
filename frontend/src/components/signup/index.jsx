@@ -178,7 +178,7 @@ function signUp(setRedirect, setOpenModal) {
         console.log("Successfully created user");
         setRedirect(<Redirect to={"/signin"} />);
       } else {
-        console.log(JSON.stringify(res));
+        console.error(JSON.stringify(res));
       }
     });
 }

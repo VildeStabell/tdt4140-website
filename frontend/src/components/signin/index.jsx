@@ -150,7 +150,6 @@ async function signIn(
     .then(res => {
       if (!error) {
         console.log("Successfully logged in!");
-        console.log(res);
         localStorage.setItem("refresh", res.refresh);
         setAccesstoken(res.access);
         setLoggedIn(true);
@@ -166,12 +165,12 @@ async function signIn(
             setUser(res.data);
           })
           .catch(err => {
-            console.log(err);
+            console.error(err);
           });
 
         setRedirect(<Redirect to={"/"} />);
       } else {
-        console.log(res);
+        console.error(res);
       }
     });
 }
