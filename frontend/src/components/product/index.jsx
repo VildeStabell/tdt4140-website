@@ -28,10 +28,11 @@ export default function Product({
   const [productLoaded, setProductLoaded] = useState(false);
 
   useEffect(() => {
+    console.log("%cReloading product component", "color: orange");
     const productUrl =
       "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
     axios.get(productUrl).then(res => {
-      console.log(res.data);
+      console.log("Successfully loaded product info");
       setProduct(res.data);
       setProductLoaded(true);
       const creatorUrl =
@@ -63,7 +64,7 @@ export default function Product({
           <Grid item xs={12} md={6} className="product-image">
             <img src={product.img} alt="" className="display-img" />
           </Grid>
-          <Grid item xs={0} md={2}>
+          <Grid item xs={false} md={2}>
             {null}
           </Grid>
           <Grid item xs={12} md={4}>

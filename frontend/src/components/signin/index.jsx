@@ -146,7 +146,6 @@ async function signIn(
   })
     .then(res => {
       if (res.status >= 400) {
-        console.log("Error");
         error = true;
         setOpenModal(true);
       }
