@@ -29,7 +29,7 @@ export default function EditAdvert({
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  // const [image, setImage] = useState("");
+  const [imageChanged, setImageChanged] = useState(false);
 
   useEffect(() => {
     if (editProduct) {
@@ -100,9 +100,7 @@ export default function EditAdvert({
               id="contained-button-file"
               multiple
               type="file"
-              onChange={() => console.log("image")}
-              // value={image}
-              // onChange={e => setImage(e.target.value)}
+              onChange={() => setImageChanged(true)}
             />
             <label htmlFor="contained-button-file">
               <Button
@@ -130,7 +128,8 @@ export default function EditAdvert({
                   getProducts,
                   setRedirect,
                   editProduct,
-                  selectedProduct
+                  selectedProduct,
+                  imageChanged
                 );
               }}
             >
@@ -160,7 +159,8 @@ function UpdateAdvert(
   getProducts,
   setRedirect,
   editProduct,
-  selectedProduct
+  selectedProduct,
+  imageChanged
 ) {
   const title = document.getElementById("title").value;
   const price = document.getElementById("price").value;
@@ -172,10 +172,10 @@ function UpdateAdvert(
   form_data.append("title", title);
   form_data.append("creator", user.id);
   form_data.append("description", description);
-  form_data.append("img", image.files[0]);
   form_data.append("price", price);
 
   if (editProduct) {
+    if (imageChanged) form_data.append("img", image.files[0]);
     axios
       .put(url + selectedProduct + "/", form_data, {
         headers: {
@@ -201,6 +201,7 @@ function UpdateAdvert(
         setOpenModal(true);
       });
   } else {
+    form_data.append("img", image.files[0]);
     axios
       .post(url, form_data, {
         headers: {
