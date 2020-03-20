@@ -30,12 +30,13 @@ export default function EditAdvert({
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   // const [image, setImage] = useState("");
-  const [id, setId] = useState("");
 
   useEffect(() => {
     if (editProduct) {
       const productUrl =
-        "http://127.0.0.1:8000/api/marketplace/saleItems/" + selectedProduct;
+        "http://127.0.0.1:8000/api/marketplace/saleItems/" +
+        selectedProduct +
+        "/";
       axios.get(productUrl).then(res => {
         console.log("Successfully loaded product info");
         setTitle(res.data.title);
@@ -176,7 +177,7 @@ function UpdateAdvert(
 
   if (editProduct) {
     axios
-      .put(url + selectedProduct, form_data, {
+      .put(url + selectedProduct + "/", form_data, {
         headers: {
           Authorization: "Bearer " + accessToken,
           "content-type":
