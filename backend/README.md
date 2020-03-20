@@ -17,7 +17,7 @@ I terminalen:
 - cd til "backend"
 - Kjør `python manage.py runsever`
 
-##Problem med server/migrations:
+## Problem med server/migrations:
 
 - Slett migrations-mappen i marketplace og slett databasefilen db.sqlite3
 - Kjør `python manage.py makemigrations` og `python manage.py migrate`
@@ -53,7 +53,6 @@ Dersom alt gikk som det skal, får du
 
 ```json
 {
-<<<<<<< backend/README.md
     "username": "bruker",
     "phone": "12345678",
     "first_name": "F_navn",
@@ -62,7 +61,6 @@ Dersom alt gikk som det skal, får du
     "id": 1,
     "is_blocked": false
     "is_staff": false
-
 }
 ```
 
