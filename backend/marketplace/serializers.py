@@ -13,5 +13,27 @@ class SaleItemSerializer(sz.ModelSerializer):
 # Serializer for brukere
 class UserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
-        fields = ("username", "phone", "first_name", "last_name", "email", "id", "is_staff")
-        read_only_fields = ("is_staff", "id")  # skal ikke kunne redigeres
+        fields = (
+            "username",
+            "phone",
+            "first_name",
+            "last_name",
+            "email",
+            "id",
+            "is_staff",
+            "is_blocked")
+        # skal ikke kunne redigeres
+        read_only_fields = ("is_staff", "id", "is_blocked")
+
+
+class ForAdminUserSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
+        fields = (
+            "username",
+            "phone",
+            "first_name",
+            "last_name",
+            "email",
+            "id",
+            "is_staff",
+            "is_blocked")
