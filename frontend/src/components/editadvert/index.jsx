@@ -43,7 +43,6 @@ export default function EditAdvert({
         setPrice(res.data.price);
         setDescription(res.data.description);
         // setImage(res.data.img);
-        setId(res.data.id);
       });
     }
   }, []);
@@ -101,6 +100,7 @@ export default function EditAdvert({
               id="contained-button-file"
               multiple
               type="file"
+              onChange={() => console.log("image")}
               // value={image}
               // onChange={e => setImage(e.target.value)}
             />
