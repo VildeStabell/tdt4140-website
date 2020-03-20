@@ -94,7 +94,13 @@ export default function Product({
               />
             </Grid>
             <Grid item xs={6} md={3} className="admin">
-              <BlockBtn creator={creator} user={user} isLoggedIn={isLoggedIn} />
+              <BlockBtn
+                creator={creator}
+                user={user}
+                isLoggedIn={isLoggedIn}
+                accessToken={accessToken}
+                setRedirect={setRedirect}
+              />
             </Grid>
           </Grid>
           <Grid container alignItems="center">
@@ -262,7 +268,7 @@ function deleteProduct(accessToken, selectedProduct, setRedirect, getProducts) {
     .catch(err => console.error(err));
 }
 
-function BlockBtn({ user, creator, isLoggedIn }) {
+function BlockBtn({ user, creator, isLoggedIn, accessToken, setRedirect }) {
   return isLoggedIn &&
     creator != null &&
     user != null &&
@@ -273,7 +279,9 @@ function BlockBtn({ user, creator, isLoggedIn }) {
       className="admin-btn"
       variant="contained"
       startIcon={<BlockIcon />}
-      onClick={() => {}}
+      onClick={() => {
+        blockUser(creator, accessToken, setRedirect);
+      }}
     >
       Blokker bruker
     </Button>
@@ -288,5 +296,16 @@ function blockUser(creator, accessToken, setRedirect) {
     username: creator.username,
     is_blocked: "true"
   };
-  axios.put(url, body);
+  axios
+    .put(url, {
+      body: body,
+      headers: {
+        Authorization: "Bearer " + accessToken
+      }
+    })
+    .then(res => {
+      setRedirect(true);
+      console.log(res);
+    })
+    .catch(err => console.error(err));
 }
