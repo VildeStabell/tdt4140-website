@@ -134,7 +134,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         # 'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+         'rest_framework.authentication.SessionAuthentication',
         # Gives admin user acces to all API
         #  'rest_framework.authentication.BasicAuthentication',
 
