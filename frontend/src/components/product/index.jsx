@@ -100,6 +100,7 @@ export default function Product({
                 isLoggedIn={isLoggedIn}
                 accessToken={accessToken}
                 setRedirect={setRedirect}
+                getProducts={getProducts}
               />
             </Grid>
           </Grid>
@@ -268,7 +269,14 @@ function deleteProduct(accessToken, selectedProduct, setRedirect, getProducts) {
     .catch(err => console.error(err));
 }
 
-function BlockBtn({ user, creator, isLoggedIn, accessToken, setRedirect }) {
+function BlockBtn({
+  user,
+  creator,
+  isLoggedIn,
+  accessToken,
+  setRedirect,
+  getProducts
+}) {
   return isLoggedIn &&
     creator != null &&
     user != null &&
@@ -280,7 +288,7 @@ function BlockBtn({ user, creator, isLoggedIn, accessToken, setRedirect }) {
       variant="contained"
       startIcon={<BlockIcon />}
       onClick={() => {
-        blockUser(creator, accessToken, setRedirect);
+        blockUser(creator, accessToken, setRedirect, getProducts);
       }}
     >
       Blokker bruker
@@ -290,7 +298,29 @@ function BlockBtn({ user, creator, isLoggedIn, accessToken, setRedirect }) {
   );
 }
 
-function blockUser(creator, accessToken, setRedirect) {
+function blockUser(creator, accessToken, setRedirect, getProducts) {
+  // TODO Remove all saleitems of which the blocked user is owner..
+  const saleitemsurl = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+  axios
+    .get(saleitemsurl)
+    .then(res => res.data)
+    .then(res =>
+      res.forEach(saleitem => {
+        if (saleitem.creator === creator.id) {
+          axios.delete(
+            "http://127.0.0.1:8000/api/marketplace/saleItems/" +
+              saleitem.id +
+              "/",
+            {
+              headers: {
+                Authorization: "Bearer " + accessToken
+              }
+            }
+          );
+        }
+      })
+    );
+
   const url = "http://localhost:8000/api/marketplace/admin/" + creator.id + "/";
   const body = {
     username: creator.username,
@@ -304,6 +334,7 @@ function blockUser(creator, accessToken, setRedirect) {
       }
     })
     .then(res => {
+      getProducts("");
       setRedirect(true);
       console.log(res);
     })
