@@ -17,6 +17,7 @@ import axios from "axios";
 import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import BlockIcon from "@material-ui/icons/Block";
 
 export default function Product({
   selectedProduct,
@@ -91,6 +92,9 @@ export default function Product({
                 setEditRedirect={setEditRedirect}
                 setEditProduct={setEditProduct}
               />
+            </Grid>
+            <Grid item xs={6} md={3} className="admin">
+              <BlockBtn creator={creator} user={user} isLoggedIn={isLoggedIn} />
             </Grid>
           </Grid>
           <Grid container alignItems="center">
@@ -256,4 +260,33 @@ function deleteProduct(accessToken, selectedProduct, setRedirect, getProducts) {
       setRedirect(true);
     })
     .catch(err => console.error(err));
+}
+
+function BlockBtn({ user, creator, isLoggedIn }) {
+  return isLoggedIn &&
+    creator != null &&
+    user != null &&
+    user.is_staff === true &&
+    user.id !== creator.id ? (
+    <Button
+      fullWidth
+      className="admin-btn"
+      variant="contained"
+      startIcon={<BlockIcon />}
+      onClick={() => {}}
+    >
+      Blokker bruker
+    </Button>
+  ) : (
+    <></>
+  );
+}
+
+function blockUser(creator, accessToken, setRedirect) {
+  const url = "http://localhost:8000/api/marketplace/admin/" + creator.id + "/";
+  const body = {
+    username: creator.username,
+    is_blocked: "true"
+  };
+  axios.put(url, body);
 }
