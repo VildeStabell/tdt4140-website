@@ -297,9 +297,9 @@ function blockUser(creator, accessToken, setRedirect) {
     is_blocked: "true"
   };
   axios
-    .put(url, {
-      body: body,
+    .put(url, body, {
       headers: {
+        "Content-type": "application/json",
         Authorization: "Bearer " + accessToken
       }
     })
