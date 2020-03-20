@@ -8,6 +8,7 @@ from .serializers import SaleItemSerializer, UserSerializer, ForAdminUserSeriali
 from .models import SaleItem
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import status
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .permissions import IsOwnerProfileOrAdminOrReadOnly, IsOwnerProfileOrAdminOrReadOnlyForSaleItem
 from .models import User
 
@@ -19,10 +20,16 @@ def restricted(request, *args, **kwargs):
 
 
 class SaleItemView(ModelViewSet):
-    permission_classes = [
-        IsOwnerProfileOrAdminOrReadOnlyForSaleItem]
+    queryset = SaleItem.objects.all()
+    serializer_class = SaleItemSerializer
+    permission_classes = [IsOwnerProfileOrAdminOrReadOnlyForSaleItem]
     serializer_class = SaleItemSerializer
     queryset = SaleItem.objects.all()
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ["title", "description", "price",
+                     "creator__username", "creator__email", "creator__first_name", "creator__last_name"]
+    ordering = ["-id"]
+
 
 
 class UserProfileDetailView(RetrieveUpdateDestroyAPIView):

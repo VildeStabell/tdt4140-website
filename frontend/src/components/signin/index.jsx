@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -14,6 +14,7 @@ import Container from "@material-ui/core/Container";
 import { Link as RouterLink, Redirect } from "react-router-dom";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ setLoggedIn }) {
+export default function SignIn({ setLoggedIn, setAccesstoken, setUser }) {
   const [redirect, setRedirect] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const classes = useStyles();
@@ -75,13 +76,17 @@ export default function SignIn({ setLoggedIn }) {
               id="password"
               autoComplete="off"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Husk meg"
-            />
             <Button
-              onClick={() => {
-                signIn(setRedirect, setLoggedIn, setOpenModal);
+              type="submit"
+              onClick={e => {
+                e.preventDefault();
+                signIn(
+                  setRedirect,
+                  setLoggedIn,
+                  setOpenModal,
+                  setAccesstoken,
+                  setUser
+                );
               }}
               fullWidth
               variant="contained"
@@ -113,7 +118,13 @@ export default function SignIn({ setLoggedIn }) {
   );
 }
 
-async function signIn(setRedirect, setLoggedIn, setOpenModal) {
+async function signIn(
+  setRedirect,
+  setLoggedIn,
+  setOpenModal,
+  setAccesstoken,
+  setUser
+) {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const url = "http://localhost:8000/auth/jwt/create";
@@ -131,7 +142,6 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal) {
   })
     .then(res => {
       if (res.status >= 400) {
-        console.log("Error");
         error = true;
         setOpenModal(true);
       }
@@ -140,11 +150,27 @@ async function signIn(setRedirect, setLoggedIn, setOpenModal) {
     .then(res => {
       if (!error) {
         console.log("Successfully logged in!");
-        localStorage.setItem("token", res.token);
+        localStorage.setItem("refresh", res.refresh);
+        setAccesstoken(res.access);
         setLoggedIn(true);
+
+        axios
+          .get("http://localhost:8000/auth/users/me/", {
+            headers: {
+              Authorization: "Bearer " + res.access
+            }
+          })
+          .then(res => {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            setUser(res.data);
+          })
+          .catch(err => {
+            console.error(err);
+          });
+
         setRedirect(<Redirect to={"/"} />);
       } else {
-        console.log(res);
+        console.error(res);
       }
     });
 }

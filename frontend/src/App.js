@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Box, Container, Grid } from "@material-ui/core";
 import "./style.css";
@@ -11,42 +12,123 @@ import SignIn from "./components/signin";
 import Product from "./components/product";
 import SignUp from "./components/signup";
 import Loading from "./components/loading";
+import EditAdvert from "./components/editadvert";
 
 export default function App() {
-  const [selectedProduct, setSelectedProduct] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState(
+    localStorage.getItem("selectedProduct")
+  );
+  const [editProduct, setEditProduct] = useState(false);
   const [products, setProducts] = useState([]);
+  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const [isLoggedIn, setLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
+    localStorage.getItem("refresh") ? true : false
   );
 
-  useEffect(() => {
-    console.log("User is logged in: " + isLoggedIn);
-    fetch("/mock.json")
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data);
+  const refresh = useCallback(() => {
+    const refreshUrl = "http://localhost:8000/auth/jwt/refresh";
+    axios
+      .post(
+        refreshUrl,
+        {
+          refresh: localStorage.getItem("refresh")
+        },
+        {
+          headers: {
+            "content-type": "application/json"
+          }
+        }
+      )
+      .then(res => {
+        console.log("Successfully refreshed access token");
+        setAccessToken(res.data.access);
+      })
+      .catch(() => {
+        console.error("Refresh token expired!");
+        setLoggedIn(false);
       });
-  }, []);
+  }, [setAccessToken, setLoggedIn]);
+
+  useEffect(() => {
+    console.log("%cReloading app component", "color: orange");
+    setUser(JSON.parse(localStorage.getItem("user")));
+    getProducts("");
+    if (isLoggedIn) {
+      refresh();
+    }
+  }, [isLoggedIn, refresh]);
+
+  function getProducts(query) {
+    if (query === "") {
+      const url = "http://127.0.0.1:8000/api/marketplace/saleItems/";
+      axios.get(url).then(res => setProducts(res.data));
+    } else {
+      const url =
+        "http://127.0.0.1:8000/api/marketplace/saleItems?search=" + query;
+      axios.get(url).then(res => setProducts(res.data));
+    }
+  }
 
   return (
     <Router>
       <div>
-        <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+        <NavBar
+          isLoggedIn={isLoggedIn}
+          setLoggedIn={setLoggedIn}
+          setEditProduct={setEditProduct}
+        />
         <Switch>
           <Route path="/signin">
-            <SignIn setLoggedIn={setLoggedIn} />
+            <SignIn
+              setLoggedIn={setLoggedIn}
+              setAccesstoken={setAccessToken}
+              setUser={setUser}
+            />
           </Route>
           <Route path="/signup">
             <SignUp />
           </Route>
           <Route path="/product">
             <Product
-              product={products[selectedProduct - 1]}
+              selectedProduct={selectedProduct}
               isLoggedIn={isLoggedIn}
+              user={user}
+              refresh={refresh}
+              accessToken={accessToken}
+              getProducts={getProducts}
+              setEditProduct={setEditProduct}
+            />
+          </Route>
+          <Route path="/editadvert">
+            <EditAdvert
+              accessToken={accessToken}
+              user={user}
+              getProducts={getProducts}
+              editProduct={editProduct}
+              selectedProduct={selectedProduct}
             />
           </Route>
           <Route path="/">
-            <Home products={products} callback={setSelectedProduct} />
+            <Container maxWidth="md">
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                spacing={2}
+              >
+                <Grid item className="search">
+                  <Box m={2}>
+                    <SearchBar getProducts={getProducts} />
+                  </Box>
+                </Grid>
+                <Home
+                  products={products}
+                  callback={setSelectedProduct}
+                  getProducts={getProducts}
+                />
+              </Grid>
+            </Container>
           </Route>
         </Switch>
 
@@ -58,7 +140,7 @@ export default function App() {
   );
 }
 
-function Home({ products, callback }) {
+function Home({ products, callback, getProducts }) {
   var productList = products.map(product => (
     <Grid
       key={product.id}
@@ -67,7 +149,10 @@ function Home({ products, callback }) {
       sm={6}
       md={4}
       lg={3}
-      onClick={() => callback(product.id)}
+      onClick={() => {
+        callback(product.id);
+        localStorage.setItem("selectedProduct", product.id);
+      }}
     >
       <SaleItem
         productID={product.id}
@@ -79,24 +164,15 @@ function Home({ products, callback }) {
   ));
 
   return productList.length >= 1 ? (
-    <Container maxWidth="md">
-      <Grid container direction="column" alignItems="center" spacing={2}>
-        <Grid item className="search">
-          <Box m={2}>
-            <SearchBar />
-          </Box>
-        </Grid>
-        <Grid
-          item
-          container
-          spacing={4}
-          alignItems="flex-start"
-          justify="flex-start"
-        >
-          {productList}
-        </Grid>
-      </Grid>
-    </Container>
+    <Grid
+      item
+      container
+      spacing={4}
+      alignItems="flex-start"
+      justify="flex-start"
+    >
+      {productList}
+    </Grid>
   ) : (
     <Loading />
   );
