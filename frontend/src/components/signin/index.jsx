@@ -161,14 +161,20 @@ async function signIn(
             }
           })
           .then(res => {
-            localStorage.setItem("user", JSON.stringify(res.data));
-            setUser(res.data);
+            if (res.data.is_blocked === true) {
+              localStorage.removeItem("refresh");
+              setAccesstoken(null);
+              setLoggedIn(false);
+              setRedirect(<Redirect to={"/blocked"} />);
+            } else {
+              localStorage.setItem("user", JSON.stringify(res.data));
+              setUser(res.data);
+              setRedirect(<Redirect to={"/"} />);
+            }
           })
           .catch(err => {
             console.error(err);
           });
-
-        setRedirect(<Redirect to={"/"} />);
       } else {
         console.error(res);
       }

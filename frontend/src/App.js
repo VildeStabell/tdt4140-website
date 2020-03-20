@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Box, Container, Grid } from "@material-ui/core";
+import { Box, Container, Grid, Typography } from "@material-ui/core";
 import "./style.css";
 
 import NavBar from "./components/navbar";
@@ -108,6 +108,11 @@ export default function App() {
               editProduct={editProduct}
               selectedProduct={selectedProduct}
             />
+          </Route>
+          <Route path="/blocked">
+            <Typography variant="h3" align="center">
+              Your account has been blocked from this site :(
+            </Typography>
           </Route>
           <Route path="/">
             <Container maxWidth="md">
