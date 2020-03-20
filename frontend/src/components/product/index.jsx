@@ -197,7 +197,7 @@ function DeleteBtn({
   return isLoggedIn &&
     creator != null &&
     user != null &&
-    creator.id === user.id ? (
+    (creator.id === user.id || user.is_staff === true) ? (
     <Button
       fullWidth
       className="admin-btn"
