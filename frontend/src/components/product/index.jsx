@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 export default function Product({
   selectedProduct,
@@ -23,9 +24,11 @@ export default function Product({
   user,
   refresh,
   accessToken,
-  getProducts
+  getProducts,
+  setEditProduct
 }) {
   const [redirect, setRedirect] = useState(false);
+  const [editRedirect, setEditRedirect] = useState(false);
   const [product, setProduct] = useState({ img: "no image loaded" });
   const [creator, setCreator] = useState(null);
   const [productLoaded, setProductLoaded] = useState(false);
@@ -62,6 +65,8 @@ export default function Product({
   }, [accessToken, isLoggedIn, refresh, selectedProduct]);
   if (redirect) {
     return <Redirect to="/" />;
+  } else if (editRedirect) {
+    return <Redirect to="/editadvert" />;
   } else {
     return productLoaded ? (
       <div>
@@ -76,6 +81,15 @@ export default function Product({
                 selectedProduct={selectedProduct}
                 setRedirect={setRedirect}
                 getProducts={getProducts}
+              />
+            </Grid>
+            <Grid item xs={6} md={3} className="admin">
+              <EditBtn
+                creator={creator}
+                user={user}
+                isLoggedIn={isLoggedIn}
+                setEditRedirect={setEditRedirect}
+                setEditProduct={setEditProduct}
               />
             </Grid>
           </Grid>
@@ -195,6 +209,33 @@ function DeleteBtn({
       }
     >
       Slett annonse
+    </Button>
+  ) : (
+    <></>
+  );
+}
+function EditBtn({
+  creator,
+  user,
+  isLoggedIn,
+  setEditRedirect,
+  setEditProduct
+}) {
+  return isLoggedIn &&
+    creator != null &&
+    user != null &&
+    creator.id === user.id ? (
+    <Button
+      fullWidth
+      className="admin-btn"
+      variant="contained"
+      startIcon={<EditIcon />}
+      onClick={() => {
+        setEditProduct(true);
+        setEditRedirect(true);
+      }}
+    >
+      Rediger annonse
     </Button>
   ) : (
     <></>
