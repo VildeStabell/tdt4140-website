@@ -42,10 +42,9 @@ export default function EditAdvert({
         setTitle(res.data.title);
         setPrice(res.data.price);
         setDescription(res.data.description);
-        // setImage(res.data.img);
       });
     }
-  }, []);
+  }, [editProduct, selectedProduct]);
 
   return redirect ? (
     <Redirect to="/" />
