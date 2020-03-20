@@ -18,6 +18,7 @@ export default function App() {
   const [selectedProduct, setSelectedProduct] = useState(
     localStorage.getItem("selectedProduct")
   );
+  const [editProduct, setEditProduct] = useState(false);
   const [products, setProducts] = useState([]);
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
@@ -72,7 +73,11 @@ export default function App() {
   return (
     <Router>
       <div>
-        <NavBar isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+        <NavBar
+          isLoggedIn={isLoggedIn}
+          setLoggedIn={setLoggedIn}
+          setEditProduct={setEditProduct}
+        />
         <Switch>
           <Route path="/signin">
             <SignIn
@@ -92,6 +97,7 @@ export default function App() {
               refresh={refresh}
               accessToken={accessToken}
               getProducts={getProducts}
+              setEditProduct={setEditProduct}
             />
           </Route>
           <Route path="/editadvert">
@@ -99,6 +105,8 @@ export default function App() {
               accessToken={accessToken}
               user={user}
               getProducts={getProducts}
+              editProduct={editProduct}
+              selectedProduct={selectedProduct}
             />
           </Route>
           <Route path="/">

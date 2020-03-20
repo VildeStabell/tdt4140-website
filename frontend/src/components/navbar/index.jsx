@@ -6,7 +6,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-export default function NavBar({ isLoggedIn, setLoggedIn }) {
+export default function NavBar({ isLoggedIn, setLoggedIn, setEditProduct }) {
   return (
     <div>
       <AppBar position="static">
@@ -26,7 +26,7 @@ export default function NavBar({ isLoggedIn, setLoggedIn }) {
             </Grid>
             <Grid item className="buttons">
               <NavButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
-              <NewAdd isLoggedIn={isLoggedIn} />
+              <NewAdd isLoggedIn={isLoggedIn} setEditProduct={setEditProduct} />
             </Grid>
           </Grid>
         </Toolbar>
@@ -73,9 +73,10 @@ function signOut(setLoggedIn) {
   setLoggedIn(false);
 }
 
-function NewAdd({ isLoggedIn }) {
+function NewAdd({ isLoggedIn, setEditProduct }) {
   return isLoggedIn ? (
     <Button
+      onClick={() => setEditProduct(false)}
       component={Link}
       to="/editadvert"
       variant="contained"
