@@ -4,11 +4,22 @@ from rest_framework.routers import DefaultRouter
 
 
 urlpatterns = [
+    path(
+        'restricted/',
+        restricted),
 
-    # path('', include('djoser.urls')),
-    # path('', include('djoser.urls.authtoken')),
-    path('restricted/', restricted),
+    path(
+        "profile/<int:pk>/",
+        UserProfileDetailView.as_view(),
+        name="profile"),
 
-    path("all-profiles", UserProfileListCreateView.as_view(), name="all-profiles"),
-    path("profile/<int:pk>", UserProfileDetailView.as_view(), name="profile"),
 ]
+
+
+# Router fixes urls for SaleItems
+router = DefaultRouter()
+router.register('saleItems', SaleItemView)
+router.register('admin', ForAdminUserView)
+
+urlpatterns += router.urls
+

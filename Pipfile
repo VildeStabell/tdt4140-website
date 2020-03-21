@@ -10,8 +10,10 @@ django = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 djangorestframework-jwt = "*"
+pillow = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+django-filter = "*"
 autopep8 = "*"
 
 [requires]

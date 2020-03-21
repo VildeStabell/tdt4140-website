@@ -6,3 +6,10 @@
 .logo {
   float: left;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  min-width: 280px;
+}
