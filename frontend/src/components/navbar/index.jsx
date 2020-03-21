@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid, Typography, AppBar, Toolbar, Button } from "@material-ui/core";
 import PersonIcon from "@material-ui/icons/Person";
+import AddIcon from "@material-ui/icons/Add";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Link } from "react-router-dom";
 import "./style.css";
 
-export default function NavBar({ isLoggedIn, setLoggedIn }) {
+export default function NavBar({ isLoggedIn, setLoggedIn, setEditProduct }) {
   return (
     <div>
       <AppBar position="static">
@@ -23,8 +24,9 @@ export default function NavBar({ isLoggedIn, setLoggedIn }) {
                 SellYo'Shit
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item className="buttons">
               <NavButton isLoggedIn={isLoggedIn} setLoggedIn={setLoggedIn} />
+              <NewAdd isLoggedIn={isLoggedIn} setEditProduct={setEditProduct} />
             </Grid>
           </Grid>
         </Toolbar>
@@ -67,6 +69,22 @@ function SignOutButton({ setLoggedIn }) {
 }
 
 function signOut(setLoggedIn) {
-  localStorage.removeItem("token");
+  localStorage.removeItem("refresh");
   setLoggedIn(false);
+}
+
+function NewAdd({ isLoggedIn, setEditProduct }) {
+  return isLoggedIn ? (
+    <Button
+      onClick={() => setEditProduct(false)}
+      component={Link}
+      to="/editadvert"
+      variant="contained"
+      startIcon={<AddIcon />}
+    >
+      Ny annonse
+    </Button>
+  ) : (
+    <></>
+  );
 }

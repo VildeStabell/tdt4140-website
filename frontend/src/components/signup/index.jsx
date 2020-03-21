@@ -3,8 +3,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -69,6 +69,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  type="number"
                   autoComplete="off"
                   variant="outlined"
                   required
@@ -101,6 +102,7 @@ export default function SignUp() {
                   autoComplete="current-password"
                 />
               </Grid>
+              {/* TODO: Terms of service page
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -108,10 +110,14 @@ export default function SignUp() {
                   }
                   label="Jeg godtar betingelsene."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
-              onClick={() => signUp(setRedirect, setOpenModal)}
+              type="submit"
+              onClick={event => {
+                event.preventDefault();
+                signUp(setRedirect, setOpenModal);
+              }}
               fullWidth
               variant="contained"
               color="primary"
@@ -167,7 +173,6 @@ function signUp(setRedirect, setOpenModal) {
   })
     .then(res => {
       if (res.status >= 400) {
-        console.log("Error");
         error = true;
         setOpenModal(true);
       }
@@ -178,7 +183,7 @@ function signUp(setRedirect, setOpenModal) {
         console.log("Successfully created user");
         setRedirect(<Redirect to={"/signin"} />);
       } else {
-        console.log(JSON.stringify(res));
+        console.error(JSON.stringify(res));
       }
     });
 }
