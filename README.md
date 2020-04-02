@@ -21,12 +21,6 @@ I terminalen:
 - Kjør `npm install`
 - Kjør `npm start`
 
-## Hvordan stoppe frontend
-
-I terminalen:
-
-- Ctrl + C
-
 ## Hvordan starte backend
 
 ### Første gang:
@@ -44,13 +38,3 @@ I terminalen:
 
 - Kjør `pipenv shell`
 - Kjør `python manage.py runserver`
-
-## Hvordan stoppe backend
-
-I terminalen:
-
-- Ctrl + C
-
-## Hjelp jeg har fucket opp git/gitlab:
-
-- https://ohshitgit.com/
