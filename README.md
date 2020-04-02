@@ -4,8 +4,8 @@
 
 - [Installasjon](#installasjon)
 - [Testing](#testing)
-- [Hvordan bidra til prosjektet](contributing.md)
-- [Lisens](license.md)
+- [Hvordan bidra til prosjektet](CONTRIBUTING.md)
+- [Lisens](LICENSE.md)
 
 ## Installasjon
 
