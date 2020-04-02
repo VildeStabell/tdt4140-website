@@ -7,7 +7,26 @@
 
 ## Installasjon
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### Avhengigheter
+
+Følgende avhengigheter må installers for å kjøre prosjektet lokalt:
+
+- [Node.js](https://nodejs.org/en/) (med npm)
+- [Python](https://www.python.org/)
+- [pipenv](https://pipenv.pypa.io/en/latest/)
+
+### Hvordan kjøre prosjektet lokalt
+
+Det aller første som må gjøres er å clone repoet fra git.
+
+Frontend:
+
+1. Åpne rooten av repoet i terminalen/cmd
+2. Skriv i terminalen: `npm install`
+3. Skriv i terminalen `npm start`
+
+Backend:
+TODO: Skrive backend fremgangsmåte
 
 ## Testing
 
@@ -18,8 +37,8 @@ I skrivende stund (02.04.2020) har vi ingen automatiserte tester. Teamet har gjo
 - All funksjonalitet knyttet til fullførte brukerhistorier(GitLab Issues) er manuelt testet
 - Alle rest-api kall som er nevnt i backend-readmen er grundig testet manuelt med postman
 
-### Videre lesing
+## Videre lesing
 
-- [Bidra til prosjektet](CONTRIBUTING.md)
+- [Bidra til prosjektet](docs/CONTRIBUTING.md)
 - [Lisens](LICENSE.md)
 - [Utviklingsrutiner](docs/DEVELOPMENT.md)
