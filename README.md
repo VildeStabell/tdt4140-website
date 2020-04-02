@@ -21,8 +21,9 @@ Det aller første som må gjøres er å clone repoet fra git.
 ### Frontend:
 
 1. Åpne rooten av repoet i terminalen/cmd
-2. Skriv i terminalen: `npm install`
-3. Skriv i terminalen `npm start`
+2. Skriv i terminalen: `cd frontend`
+3. Skriv i terminalen: `npm install`
+4. Skriv i terminalen `npm start`
 
 ### Backend:
 
