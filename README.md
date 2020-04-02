@@ -1,8 +1,10 @@
-SellYoShit - Gruppe 23
+**SellYoShit - Gruppe 23**
 
 [[_TOC_]]
 
 # Installasjon
+
+Etter å ha lest denne seksjonen skal det være mulig for en utenforstående å laste ned og kjøre prosjektet på kort tid.
 
 ## Avhengigheter
 
