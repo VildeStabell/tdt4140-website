@@ -54,6 +54,7 @@ TODO: Skrive hvordan man kjører backend tester.
 
 # Annen dokumentasjon
 
+- [Hvordan vi gjennomfører testing](docs/TESTING.md)
 - [Bidra til prosjektet](docs/CONTRIBUTING.md)
 - [Lisens](LICENSE.md)
 - [Utviklingsrutiner](docs/DEVELOPMENT.md)
