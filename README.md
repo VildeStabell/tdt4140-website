@@ -1,4 +1,4 @@
-**SellYoShit - Gruppe 23**
+**SellYoShit (Gruppe 23 - TDT4140)**
 
 [[_TOC_]]
 
@@ -31,14 +31,26 @@ TODO: Skrive backend fremgangsmåte
 
 # Testing
 
-## Hvordan vi gjennomfører testing
+Automatisert testing i dette prosjektet er for øyeblikket mangelfull, en dypere forklaring på hvordan vi gjennomfører testing og hvorfor vi har valgt å gjøre det slik finnes [her](docs/TESTING.md).
 
-I skrivende stund (02.04.2020) har vi ingen automatiserte tester. Teamet har gjort en vurdering om at vi ikke har ressurser til dette. Vi gjennomfører derimot grundig manuell testing, og gjennomfører code reviews ved merge requests. Ved en ny merge request må både utvikler og reviewer teste både ny og gammel funksjonalitet, og sjekke at alt fungerer som forventet. Ettersom applikasjonen blir mer kompleks vil dette ta mer tid, og teamet ønsker derfor å starte bruk av automatisert testing snarest mulig.
+## Hvordan kjøre tester
+
+### Frontend
+
+1. Åpne rooten av repoet i terminalen/cmd
+2. Skriv i terminalen: `cd frontend`
+   - (2.5. Dersom du ikke allerde har gjort det, skriv i terminalen: `npm install`)
+3. Skriv i terminalen: `npm test`
+
+### Backend
+
+TODO: Skrive hvordan man kjører backend tester.
 
 ## Testdekning
 
+- Prosjektet inneholder en enkelt test som sjekker om App componenten renderes. Denne testen er generert automatisk av create-react-app og finnes under /frontend/src/tests/
 - All funksjonalitet knyttet til fullførte brukerhistorier(GitLab Issues) er manuelt testet
-- Alle rest-api kall som er nevnt i backend-readmen er grundig testet manuelt med postman
+- Alle rest-api kall som er nevnt i [backend-readme'en](backend/README.md) er manuelt testet med [Postman](https://www.postman.com/)
 
 # Annen dokumentasjon
 
