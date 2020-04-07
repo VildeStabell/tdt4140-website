@@ -32,7 +32,7 @@ Det aller første som må gjøres er å clone repoet fra git.
 2. Kjør kommandoen `pipenv shell`. Denne kommandoen oppretter et virtuelt utviklingsmiljø, der vi kan installere nødvenige tillegspakker til python.
 3. Kjør kommandoen `pipenv install`. Denne kommandoen installerer nødvengdige pakker som er spesifisert i [pipfile](pipfile) og [pipfile.lock](pipfile.lock)
 4. Gå til backend-mappen ved å skrive `cd backend`
-5. Kjør `python manage.py makemigretions`
+5. Kjør `python manage.py makemigrations`
 6. Kjør `python manage.py migrate`
 7. Start serveren ved å kjøre `python manage.py runserver` 
 
@@ -52,7 +52,10 @@ Automatisert testing i dette prosjektet er for øyeblikket mangelfull, en dypere
 
 ### Backend
 
-TODO: Skrive hvordan man kjører backend tester.
+1. Åpne rooten av repoet i terminalen/cmd
+2. Skriv i terminalen: `cd backend`
+   - (2.5. Dersom du ikke allerde har gjort det, aktiver `pipenv shell` og installer pakkene som beskrevet tidligere. Da må man `cd backend` igjen.)
+3. Skriv i terminalen: `python manage.py test`
 
 ## Testdekning
 
