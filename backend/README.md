@@ -8,6 +8,7 @@ I terminalen:
 - Kjør `pipenv shell`
 - Kjør `pipenv install`
 - cd til "backend"
+- Kjør `python manage.py makemigrations`
 - Kjør `python manage.py migrate` (oppdaterer databasen)
 
 ## Kjøre server
