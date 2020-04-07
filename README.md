@@ -12,7 +12,7 @@ Følgende avhengigheter må installers for å kjøre prosjektet lokalt:
 
 - [Node.js](https://nodejs.org/en/) (med npm)
 - [Python 3.8](https://www.python.org/)
-- [pipenv](https://pipenv.pypa.io/en/latest/) (Kan installeres fra terminalen med `pip install pipenv`)
+- [pipenv](https://pipenv.pypa.io/en/latest/) (Kan installeres fra terminalen med `pip3 install pipenv`)
 
 
 ## Hvordan kjøre prosjektet lokalt
@@ -27,6 +27,7 @@ Det aller første som må gjøres er å clone repoet fra git.
 4. Skriv i terminalen `npm start`
 
 ### Backend:
+(For Mac OS X, erstatt `python` med `python3`)
 
 1. Åpne rooten av repoet i terminalen/cmd
 2. Kjør kommandoen `pipenv shell`. Denne kommandoen oppretter et virtuelt utviklingsmiljø, der vi kan installere nødvenige tillegspakker til python.
@@ -51,6 +52,7 @@ Automatisert testing i dette prosjektet er for øyeblikket mangelfull, en dypere
 3. Skriv i terminalen: `npm test`
 
 ### Backend
+(For Mac OS X, erstatt `python` med `python3`)
 
 1. Åpne rooten av repoet i terminalen/cmd
 2. Skriv i terminalen: `cd backend`
