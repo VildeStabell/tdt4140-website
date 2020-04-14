@@ -18,13 +18,7 @@ Følgende avhengigheter må installers for å kjøre prosjektet lokalt:
 ## Hvordan kjøre prosjektet lokalt
 
 Det aller første som må gjøres er å clone repoet fra git.
-
-### Frontend:
-
-1. Åpne rooten av repoet i terminalen/cmd
-2. Skriv i terminalen: `cd frontend`
-3. Skriv i terminalen: `npm install`
-4. Skriv i terminalen `npm start`
+- Kan gjøres med `git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2020/23.git` i terminalen.
 
 ### Backend:
 (For Mac OS X, erstatt `python` med `python3`)
@@ -32,10 +26,20 @@ Det aller første som må gjøres er å clone repoet fra git.
 1. Åpne rooten av repoet i terminalen/cmd
 2. Kjør kommandoen `pipenv shell`. Denne kommandoen oppretter et virtuelt utviklingsmiljø, der vi kan installere nødvenige tillegspakker til python.
 3. Kjør kommandoen `pipenv install`. Denne kommandoen installerer nødvengdige pakker som er spesifisert i [pipfile](pipfile) og [pipfile.lock](pipfile.lock)
-4. Gå til backend-mappen ved å skrive `cd backend`
-5. Kjør `python manage.py makemigrations`
-6. Kjør `python manage.py migrate`
+4. Gå til backend-mappen ved å kjøre `cd backend` i terminalen.
+5. Kjør `python manage.py migrate`. Denne kommandoen lager databasen med modellene spesifisert i [migrations](backend/marketplace/migrations/)
+6. Kjør `python manage.py loaddata demodata.json`. Denne kommandoen laster inn annonser og brukere som er definert i filen [demodata.json](backend/demodata.json).
 7. Start serveren ved å kjøre `python manage.py runserver` 
+
+
+### Frontend:
+
+1. Åpne rooten av repoet i terminalen/cmd
+2. Skriv i terminalen: `cd frontend`
+3. Skriv i terminalen: `npm install`
+4. Skriv i terminalen: `npm start`
+
+
 
 
 # Testing
