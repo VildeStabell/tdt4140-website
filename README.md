@@ -67,7 +67,7 @@ Automatisert testing i dette prosjektet er for øyeblikket mangelfull, en dypere
 
 - Prosjektet inneholder en enkelt test som sjekker om App componenten renderes. Denne testen er generert automatisk av create-react-app og finnes under /frontend/src/tests/
 - All funksjonalitet knyttet til fullførte brukerhistorier(GitLab Issues) er manuelt testet
-- Alle rest-api kall som er nevnt i [backend-readme'en](backend/README.md) er manuelt testet med [Postman](https://www.postman.com/)
+- Alle rest-api kall som er nevnt i [backend-readme'en](backend/Backend_instructions.md) er manuelt testet med [Postman](https://www.postman.com/)
 
 # Annen dokumentasjon
 
