@@ -23,6 +23,11 @@ I terminalen:
 - Slett migrations-mappen i marketplace og slett databasefilen db.sqlite3
 - Kjør `python manage.py makemigrations` og `python manage.py migrate`
 
+## Lage en json-fil med nåværende data i databasen:
+
+- Kjør `python manage.py dumpdata --format=json marketplace > demodata.json`
+- For å laste inn data fra json-filen igjen: `python manage.py loaddata demodata.json`
+
 ## Hvordan gjøre http requests
 
 Forsikre deg om at databasen er oppdatert med å kjøre `python manage.py migrate`
