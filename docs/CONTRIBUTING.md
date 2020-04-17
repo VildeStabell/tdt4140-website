@@ -39,6 +39,16 @@ Følgende avhengigheter må installers for å kjøre prosjektet lokalt:
 
 ### Backend:
 
-TODO: Skrive backend fremgangsmåte
+(For Mac OS X, erstatt `python` med `python3`)
+
+1. Åpne rooten av repoet i terminalen/cmd
+2. Kjør kommandoen `pipenv shell`. Denne kommandoen oppretter et virtuelt utviklingsmiljø, der vi kan installere nødvenige tillegspakker til python.
+3. Kjør kommandoen `pipenv install`. Denne kommandoen installerer nødvengdige pakker som er spesifisert i [pipfile](pipfile) og [pipfile.lock](pipfile.lock)
+4. Gå til backend-mappen ved å kjøre `cd backend` i terminalen.
+5. Kjør `python manage.py migrate`. Denne kommandoen lager databasen med modellene spesifisert i [migrations](backend/marketplace/migrations/)
+6. Kjør `python manage.py loaddata demodata.json`. Denne kommandoen laster inn annonser og brukere som er definert i filen [demodata.json](backend/demodata.json).
+7. Start serveren ved å kjøre `python manage.py runserver` 
+
+(Etter å ha gjort alle disse stegene én gang, trenger man bare punkt 1, 2, 4 og 7 for å starte backend-serveren igjen.)
 
 # Osv...

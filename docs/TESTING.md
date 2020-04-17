@@ -17,7 +17,12 @@ I skrivende stund (06.04.2020) har vi ingen automatiserte tester utover den ene 
 
 ## Backend
 
-TODO: Skrive hvordan man kjører backend tester.
+(For Mac OS X, erstatt python med python3)
+
+1. Åpne rooten av repoet i terminalen/cmd
+2. Skriv i terminalen: cd backend
+    - (2.5. Dersom du ikke allerde har gjort det, aktiver pipenv shell og installer pakkene som beskrevet i [README](README.md). Da må man cd backend igjen etter installasjon.)
+3. Skriv i terminalen: python manage.py test
 
 # Testdekning
 

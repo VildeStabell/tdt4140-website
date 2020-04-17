@@ -28,10 +28,10 @@ Det aller første som må gjøres er å clone repoet fra git.
 3. Kjør kommandoen `pipenv install`. Denne kommandoen installerer nødvengdige pakker som er spesifisert i [pipfile](pipfile) og [pipfile.lock](pipfile.lock)
 4. Gå til backend-mappen ved å kjøre `cd backend` i terminalen.
 5. Kjør `python manage.py migrate`. Denne kommandoen lager databasen med modellene spesifisert i [migrations](backend/marketplace/migrations/)
-6. Kjør `python manage.py loaddata demodata.json`. Denne kommandoen laster inn annonser og brukere som er definert i filen [demodata.json](backend/demodata.json).
+6. Kjør `python manage.py loaddata demodata.json`. Denne kommandoen laster inn annonser og brukere som er definert i filen [demodata.json](backend/demodata.json). Dette inkluderer blant annet en admin-bruker som kan brukes til testing av admin-spesifikke funksjoner under utvikling. For å logge inn, bruk email: `admin@mail.no`, passord: `admin`
 7. Start serveren ved å kjøre `python manage.py runserver` 
 
-
+(Etter å ha gjort alle disse stegene én gang, trenger man bare punkt 1, 2, 4 og 7 for å starte backend-serveren igjen.)
 ### Frontend:
 
 1. Åpne rooten av repoet i terminalen/cmd
@@ -67,7 +67,7 @@ Automatisert testing i dette prosjektet er for øyeblikket mangelfull, en dypere
 
 - Prosjektet inneholder en enkelt test som sjekker om App componenten renderes. Denne testen er generert automatisk av create-react-app og finnes under /frontend/src/tests/
 - All funksjonalitet knyttet til fullførte brukerhistorier(GitLab Issues) er manuelt testet
-- Alle rest-api kall som er nevnt i [backend-readme'en](backend/Backend_instructions.md) er manuelt testet med [Postman](https://www.postman.com/)
+- Alle rest-api kall som er nevnt i [backend_instructions](backend/Backend_instructions.md) er manuelt testet med [Postman](https://www.postman.com/)
 
 # Annen dokumentasjon
 
