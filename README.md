@@ -20,6 +20,8 @@ Følgende avhengigheter må installers for å kjøre prosjektet lokalt:
 Det aller første som må gjøres er å clone repoet fra git.
 - Kan gjøres med `git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2020/23.git` i terminalen.
 
+For at applikasjonen skal kjøre i sin helhet, må frontend og backend kjøre i hver sin terminal.
+
 ### Backend:
 (For Mac OS X, erstatt `python` med `python3`)
 
@@ -31,6 +33,8 @@ Det aller første som må gjøres er å clone repoet fra git.
 6. Kjør `python manage.py loaddata demodata.json`. Denne kommandoen laster inn annonser og brukere som er definert i filen [demodata.json](backend/demodata.json). Dette inkluderer blant annet en admin-bruker som kan brukes til testing av admin-spesifikke funksjoner under utvikling. For å logge inn, bruk email: `admin@mail.no`, passord: `admin`
 7. Start serveren ved å kjøre `python manage.py runserver` 
 
+Serveren stoppes med `ctr+c` i terminalen.
+
 (Etter å ha gjort alle disse stegene én gang, trenger man bare punkt 1, 2, 4 og 7 for å starte backend-serveren igjen.)
 ### Frontend:
 
@@ -39,6 +43,8 @@ Det aller første som må gjøres er å clone repoet fra git.
 3. Skriv i terminalen: `npm install`
 4. Skriv i terminalen: `npm start`
 
+
+Serveren stoppes med `ctr+c` i terminalen.
 
 
 
