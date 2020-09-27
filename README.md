@@ -1,4 +1,18 @@
 **SellYoShit (Gruppe 23 - TDT4140)**
+This project was developed for an assignment in the course TDT4140 - Software Development during the spring semester 2020.
+
+## Codeowners
+The project was created by 
+- Vilde Voss Stabell (me)
+- Jostein Hjortland Tysse
+- Håvard Hjelmeseth
+- Lukas Tveiten
+- Sarunas Juskenas
+- Ina Hoie
+
+## About this repository 
+This repository is cloned from GitLab, which is why the commits refer to issue numbers which are not present here.
+
 
 [[_TOC_]]
 
