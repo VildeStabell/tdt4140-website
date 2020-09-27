@@ -1,4 +1,4 @@
-**SellYoShit (Gruppe 23 - TDT4140)**
+# SellYoShit (Gruppe 23 - TDT4140)
 This project was developed for an assignment in the course TDT4140 - Software Development during the spring semester 2020.
 
 ## Codeowners
